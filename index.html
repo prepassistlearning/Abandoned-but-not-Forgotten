@@ -1,0 +1,3359 @@
+html
+<!doctype html>
+<html lang="en">
+<head>
+<script>
+try {
+  var t = localStorage.getItem("th") || (matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark");
+  document.documentElement.dataset.theme = t;
+} catch (e) {
+  document.documentElement.dataset.theme = "dark";
+}
+</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Abandoned but Not Forgotten — An Atlas of Moon &amp; Mars Missions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&family=JetBrains+Mono:wght@500;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #060913;
+  --bg-elev: #0c1224;
+  --ink: #f0f4ff;
+  --mut: #98a4c7;
+  --glass: rgba(16, 23, 44, 0.72);
+  --glass-strong: rgba(11, 16, 32, 0.94);
+  --line: rgba(255, 255, 255, 0.13);
+  --spec: rgba(255, 255, 255, 0.25);
+  --acc: #ffb86b;
+  --acc-ink: #241000;
+  --acc-glow: rgba(255, 184, 107, 0.26);
+  --hi: rgba(255, 255, 255, 0.08);
+  --inp: rgba(4, 7, 16, 0.6);
+  --atlas: #03050c;
+  --cvbg: rgba(3, 6, 15, 0.56);
+  --star: #ffffff;
+  --hero: radial-gradient(75% 55% at 50% 100%, rgba(56, 32, 84, 0.52), transparent),
+          radial-gradient(60% 45% at 85% 5%, rgba(22, 46, 98, 0.52), transparent);
+  --em: linear-gradient(105deg, #ffe0ad, #ff8e66 55%, #c7a6ff);
+  --sh: 0 22px 55px rgba(0, 0, 0, 0.5);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --spring: cubic-bezier(0.2, 0.9, 0.25, 1.15);
+  --sans: 'Manrope', system-ui, -apple-system, sans-serif;
+  --serif: 'Fraunces', Georgia, serif;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+[data-theme="light"] {
+  --bg: #f4f6fb;
+  --bg-elev: #ffffff;
+  --ink: #11172b;
+  --mut: #505b78;
+  --glass: rgba(255, 255, 255, 0.84);
+  --glass-strong: rgba(255, 255, 255, 0.97);
+  --line: rgba(18, 28, 64, 0.12);
+  --spec: rgba(255, 255, 255, 0.95);
+  --acc: #c84b08;
+  --acc-ink: #ffffff;
+  --acc-glow: rgba(200, 75, 8, 0.2);
+  --hi: rgba(18, 28, 64, 0.06);
+  --inp: rgba(242, 245, 252, 0.95);
+  --atlas: #e2e8f5;
+  --cvbg: rgba(18, 28, 64, 0.05);
+  --star: #1e2b58;
+  --hero: radial-gradient(75% 55% at 50% 100%, rgba(255, 214, 188, 0.65), transparent),
+          radial-gradient(60% 45% at 85% 5%, rgba(196, 214, 255, 0.7), transparent);
+  --em: linear-gradient(105deg, #c84b08, #b81d54 55%, #4f35c2);
+  --sh: 0 18px 46px rgba(24, 36, 82, 0.11);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 16px/1.65 var(--sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s var(--ease), color 0.4s var(--ease);
+}
+
+h1, h2, h3 {
+  font-family: var(--serif);
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0 0 0.42em;
+  letter-spacing: -0.015em;
+}
+h2 { font-size: clamp(2rem, 4.6vw, 3.3rem); }
+a { color: var(--acc); }
+button { font: inherit; color: inherit; cursor: pointer; }
+
+.wrap {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 max(22px, env(safe-area-inset-left));
+}
+
+.glass {
+  background: var(--glass);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+  border: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 var(--spec), var(--sh);
+  border-radius: 22px;
+  transition: background-color 0.35s var(--ease), border-color 0.35s var(--ease), box-shadow 0.35s var(--ease);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 0.74rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 10px;
+}
+.eyebrow::before {
+  content: "";
+  width: 18px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--acc);
+}
+
+.lead {
+  color: var(--mut);
+  font-size: 1.08rem;
+  max-width: 62ch;
+  margin: 0;
+}
+
+/* Minimal Top-Right Utility Cluster (No Top Home Bar) */
+.util {
+  position: fixed;
+  z-index: 70;
+  top: max(14px, env(safe-area-inset-top));
+  right: max(14px, env(safe-area-inset-right));
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+}
+.util-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.ubtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 15px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--glass-strong);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 800;
+  box-shadow: var(--sh);
+  transition: transform 0.3s var(--spring), border-color 0.25s;
+}
+.ubtn:hover { transform: translateY(-2px); border-color: var(--acc); }
+
+#idx {
+  width: min(260px, calc(100vw - 28px));
+  padding: 12px;
+  border-radius: 20px;
+  background: var(--glass-strong);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh);
+  display: none;
+  flex-direction: column;
+  gap: 4px;
+}
+#idx.open { display: flex; animation: popIn 0.28s var(--spring); }
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(-8px) scale(0.96); }
+  to { opacity: 1; transform: none; }
+}
+#idx a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 12px;
+  text-decoration: none;
+  color: var(--mut);
+  font-size: 0.86rem;
+  font-weight: 700;
+  transition: background-color 0.2s, color 0.2s;
+}
+#idx a:hover, #idx a.on {
+  background: var(--hi);
+  color: var(--ink);
+}
+#idx a span {
+  font: 700 0.72rem var(--mono);
+  color: var(--acc);
+}
+
+/* Reveal animations */
+.rv {
+  opacity: 0;
+  transform: translateY(24px) scale(0.99);
+  transition: opacity 0.8s var(--ease), transform 0.8s var(--ease);
+}
+.rv.in {
+  opacity: 1;
+  transform: none;
+}
+
+section { padding: 96px 0; position: relative; }
+
+/* 1. Cinematic Scroll Prologue */
+#intro {
+  height: 760vh;
+  padding: 0;
+  background: #03050c;
+  color: #eef1fb;
+}
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+  overflow: hidden;
+}
+#film {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+#telemetry {
+  position: absolute;
+  top: max(16px, env(safe-area-inset-top));
+  left: max(16px, env(safe-area-inset-left));
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: rgba(10, 15, 30, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  font: 500 0.74rem/1.45 var(--mono);
+  color: #b7c3e4;
+  pointer-events: none;
+  z-index: 3;
+}
+#telemetry b { color: #ffb86b; display: block; font-size: 0.78rem; }
+
+#cap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(9svh + env(safe-area-inset-bottom));
+  height: 124px;
+  text-align: center;
+  pointer-events: none;
+  z-index: 3;
+}
+#cap div {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+  padding: 0 22px;
+  transform: translateY(10px);
+  transition: opacity 0.25s linear, transform 0.25s linear;
+}
+#cap b {
+  display: block;
+  font: 600 clamp(1.75rem, 4.8vw, 3.1rem)/1.1 var(--serif);
+  text-shadow: 0 6px 28px rgba(0, 0, 0, 0.85);
+}
+#cap span {
+  display: inline-block;
+  margin-top: 6px;
+  color: #c2cce8;
+  font-size: 1rem;
+  max-width: 56ch;
+}
+
+#ititle {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  padding: 0 22px;
+  opacity: 0;
+  visibility: hidden;
+  z-index: 4;
+}
+#ititle .eyebrow { color: #ffb86b; justify-content: center; }
+#ititle .eyebrow::before { background: #ffb86b; }
+#ititle h1 {
+  font-size: clamp(2.7rem, 9.2vw, 6.6rem);
+  margin: 0.08em 0;
+  color: #f4f7ff;
+}
+#ititle h1 em {
+  font-style: italic;
+  background: linear-gradient(100deg, #ffd9a0, #ff8a65 60%, #c9a7ff);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+#ititle p {
+  color: #b8c3e2;
+  max-width: 54ch;
+  margin: 12px auto 22px;
+  font-size: 1.06rem;
+}
+#fp {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 3px;
+  width: 0;
+  background: #ffb86b;
+  box-shadow: 0 0 12px #ffb86b;
+  z-index: 5;
+}
+.skip {
+  position: absolute;
+  right: 18px;
+  bottom: calc(18px + env(safe-area-inset-bottom));
+  padding: 10px 18px;
+  border-radius: 99px;
+  background: rgba(16, 23, 44, 0.78);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #eef1fb;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 0.84rem;
+  z-index: 5;
+  transition: transform 0.3s var(--spring), background-color 0.3s;
+}
+.skip:hover { transform: translateY(-2px); background: rgba(34, 46, 82, 0.95); }
+
+.cta {
+  display: inline-flex;
+  gap: 8px;
+  align-items: center;
+  margin: 6px;
+  padding: 14px 28px;
+  border-radius: 99px;
+  background: linear-gradient(135deg, #ffd093, #ff944d);
+  color: #241000;
+  font-weight: 800;
+  text-decoration: none;
+  box-shadow: 0 12px 32px rgba(255, 154, 85, 0.36), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  transition: transform 0.4s var(--spring);
+}
+.cta:hover { transform: translateY(-3px) scale(1.03); }
+.cta.g {
+  background: rgba(255, 255, 255, 0.1);
+  color: #eef1fb;
+  box-shadow: none;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+}
+
+/* 2. Executive Briefing & Counters */
+#overview {
+  padding: 104px 0 88px;
+  background: var(--hero), var(--bg);
+  overflow: hidden;
+}
+#stars {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.brief-head {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: 1.2fr 0.8fr;
+  align-items: end;
+}
+.challenge-badge {
+  padding: 20px 22px;
+  font-size: 0.92rem;
+}
+.challenge-badge b {
+  display: block;
+  font: 700 0.76rem var(--mono);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc);
+  margin-bottom: 6px;
+}
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(165px, 1fr));
+  gap: 16px;
+  margin-top: 42px;
+  position: relative;
+}
+.stats div {
+  padding: 22px 16px;
+  transition: transform 0.35s var(--spring);
+}
+.stats div:hover { transform: translateY(-4px); }
+.stats b {
+  display: block;
+  font: 600 clamp(2.1rem, 4.4vw, 3rem)/1 var(--serif);
+  color: var(--acc);
+  margin-bottom: 6px;
+}
+.stats span { color: var(--mut); font-size: 0.86rem; font-weight: 600; }
+
+/* 3. First-Principles Physics: Why Hardware Stays Behind */
+.why {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  margin-top: 36px;
+}
+.why-card {
+  padding: 26px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.35s var(--spring);
+}
+.why-card:hover { transform: translateY(-4px); }
+.why-num {
+  font: 700 0.78rem var(--mono);
+  color: var(--acc);
+  letter-spacing: 0.12em;
+}
+.why-card h3 { margin: 8px 0 10px; font-size: 1.46rem; }
+.why-card p { margin: 0 0 18px; color: var(--mut); font-size: 0.95rem; }
+.fig-box {
+  width: 100%;
+  height: 162px;
+  border-radius: 16px;
+  background: var(--cvbg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+.fig-box svg { width: 100%; height: 100%; display: block; }
+
+.analogy {
+  margin-top: 22px;
+  padding: 22px 26px;
+  display: flex;
+  gap: 18px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.analogy-tag {
+  padding: 6px 12px;
+  border-radius: 99px;
+  background: var(--acc);
+  color: var(--acc-ink);
+  font: 800 0.74rem var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+@keyframes rocketCurve {
+  0%, 100% { stroke-dashoffset: 0; }
+  50% { stroke-dashoffset: 24; }
+}
+@keyframes stageAscend {
+  0%, 22% { transform: translateY(0); }
+  58%, 76% { transform: translateY(-44px); }
+  100% { transform: translateY(0); }
+}
+@keyframes plumePulse {
+  0%, 18%, 82%, 100% { opacity: 0; transform: scaleY(0.3); }
+  28%, 68% { opacity: 0.95; transform: scaleY(1.1); }
+}
+@keyframes pingWave {
+  0% { r: 6; opacity: 0.9; }
+  100% { r: 34; opacity: 0; }
+}
+.anim-curve { stroke-dasharray: 6 4; animation: rocketCurve 2.2s linear infinite; }
+.anim-ascent { animation: stageAscend 4.8s var(--ease) infinite; transform-box: fill-box; transform-origin: center; }
+.anim-plume { animation: plumePulse 4.8s var(--ease) infinite; transform-box: fill-box; transform-origin: top center; }
+.anim-ping { animation: pingWave 2.6s ease-out infinite; }
+.anim-ping2 { animation: pingWave 2.6s ease-out 1.3s infinite; }
+
+/* 4. Scroll-Safe Split/Stacked 3D Atlas (Zero Overlap on Portrait & Large Screens) */
+#atlas {
+  padding: 72px 0;
+  background: var(--bg);
+}
+.atlas-shell {
+  display: grid;
+  grid-template-columns: 420px minmax(0, 1fr);
+  height: min(820px, 84svh);
+  min-height: 620px;
+  border-radius: 26px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  box-shadow: var(--sh);
+  background: var(--atlas);
+}
+
+/* Dedicated Left Sidebar */
+#side {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--glass-strong);
+  border-right: 1px solid var(--line);
+  overflow: hidden;
+  z-index: 2;
+}
+#side .hd {
+  padding: 16px 16px 12px;
+  border-bottom: 1px solid var(--line);
+}
+#q {
+  width: 100%;
+  padding: 11px 14px;
+  border-radius: 13px;
+  border: 1px solid var(--line);
+  background: var(--inp);
+  color: var(--ink);
+  font: inherit;
+  font-size: 0.9rem;
+}
+#q:focus { outline: 2px solid var(--acc); border-color: transparent; }
+
+.chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 10px 0 2px;
+  scrollbar-width: none;
+}
+.chips::-webkit-scrollbar { display: none; }
+.chip {
+  border: 1px solid var(--line);
+  background: var(--hi);
+  border-radius: 99px;
+  padding: 5px 13px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+.chip:hover { border-color: var(--acc); }
+.chip.on {
+  background: var(--acc);
+  color: var(--acc-ink);
+  border-color: var(--acc);
+}
+
+#list {
+  overflow-y: auto;
+  flex: 1;
+  padding: 8px 10px 14px;
+  overscroll-behavior: contain;
+}
+.it {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: 1px solid transparent;
+  padding: 10px 12px;
+  border-radius: 13px;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+.it:hover, .it.on {
+  background: var(--hi);
+  border-color: var(--line);
+}
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  flex: none;
+  box-shadow: 0 0 10px currentColor;
+}
+.it b { display: block; font-size: 0.92rem; }
+.it span { font-size: 0.77rem; color: var(--mut); }
+
+/* Mission Detail Drawer inside Sidebar */
+#det {
+  position: absolute;
+  inset: 0;
+  background: var(--glass-strong);
+  overflow-y: auto;
+  transform: translateX(-102%);
+  transition: transform 0.5s var(--ease);
+  overscroll-behavior: contain;
+  z-index: 4;
+}
+#det.on { transform: none; }
+#det .ph {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, #1b254a, #3a2348);
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+#det .ph::before {
+  content: "SPACECRAFT ARCHIVE";
+  font: 700 0.72rem var(--mono);
+  letter-spacing: 0.2em;
+  color: rgba(255, 255, 255, 0.35);
+}
+#det .ph img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+#det .ph img.ok { opacity: 1; }
+#det .bd { padding: 18px 20px 30px; }
+#det h3 { font-size: 1.6rem; margin-top: 4px; }
+.back {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 2;
+  border: 1px solid var(--line);
+  background: var(--glass-strong);
+  border-radius: 99px;
+  padding: 7px 14px;
+  font-weight: 800;
+  font-size: 0.82rem;
+}
+.tag {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--hi);
+  margin: 0 5px 6px 0;
+  color: var(--mut);
+}
+#det h4 {
+  margin: 16px 0 5px;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--acc);
+}
+#det ul { padding-left: 18px; margin: 0; color: var(--mut); }
+#det li { margin-bottom: 4px; font-size: 0.92rem; }
+.src { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.src a {
+  padding: 8px 13px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--hi);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.src a:hover { background: var(--line); }
+.cr { font-size: 0.72rem; color: var(--mut); margin-top: 10px; }
+
+/* Dedicated Right Globe Viewport */
+.globe-pane {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background: var(--atlas);
+}
+#cv {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  cursor: grab;
+}
+#cv:active { cursor: grabbing; }
+
+.world-sw {
+  position: absolute;
+  z-index: 5;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 99px;
+}
+.seg {
+  border: 0;
+  background: none;
+  padding: 8px 18px;
+  border-radius: 99px;
+  font-weight: 800;
+  font-size: 0.88rem;
+  transition: background-color 0.3s var(--ease), color 0.3s var(--ease);
+}
+.seg.on {
+  background: var(--ink);
+  color: var(--bg);
+}
+
+.zoom {
+  position: absolute;
+  z-index: 5;
+  right: 16px;
+  bottom: 16px;
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 99px;
+}
+.zoom button {
+  width: 38px;
+  height: 38px;
+  border: 0;
+  border-radius: 50%;
+  background: var(--hi);
+  color: var(--ink);
+  font-size: 1.15rem;
+  font-weight: 700;
+  transition: background-color 0.2s, transform 0.2s var(--spring);
+}
+.zoom button:hover { background: var(--line); transform: scale(1.06); }
+
+.legend-bar {
+  position: absolute;
+  z-index: 4;
+  left: 16px;
+  bottom: 16px;
+  padding: 8px 14px;
+  border-radius: 99px;
+  font-size: 0.76rem;
+  color: var(--mut);
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  max-width: calc(100% - 210px);
+}
+
+#tip {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--glass-strong);
+  border: 1px solid var(--line);
+  box-shadow: var(--sh);
+  font-size: 0.8rem;
+  opacity: 0;
+  transform: translate(-50%, -125%);
+  transition: opacity 0.18s;
+  white-space: nowrap;
+}
+#tip.on { opacity: 1; }
+
+#scrollToast {
+  position: absolute;
+  z-index: 7;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 10px 18px;
+  border-radius: 99px;
+  background: var(--glass-strong);
+  border: 1px solid var(--acc);
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 700;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+#scrollToast.on { opacity: 1; }
+
+/* 5. Interactive Student Physics & Staging Lab */
+.grid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
+  margin-top: 36px;
+}
+.lab { padding: 24px; display: flex; flex-direction: column; }
+.lab h3 { font-size: 1.4rem; }
+.lab canvas {
+  width: 100%;
+  height: 245px;
+  border-radius: 14px;
+  background: var(--cvbg);
+  border: 1px solid var(--line);
+  display: block;
+}
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+.row label { font-size: 0.84rem; color: var(--mut); font-weight: 600; }
+input[type="range"] { flex: 1; min-width: 120px; accent-color: var(--acc); cursor: pointer; }
+.out { font: 600 1.5rem var(--serif); color: var(--acc); }
+.btn {
+  border: 0;
+  border-radius: 99px;
+  padding: 9px 18px;
+  background: var(--acc);
+  color: var(--acc-ink);
+  font-weight: 800;
+  font-size: 0.85rem;
+  box-shadow: 0 6px 20px var(--acc-glow);
+  transition: transform 0.25s var(--spring);
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: scale(0.95); }
+.btn.sec {
+  background: var(--hi);
+  color: var(--ink);
+  box-shadow: none;
+  border: 1px solid var(--line);
+}
+
+#stageSvg {
+  width: 100%;
+  height: 245px;
+  border-radius: 14px;
+  background: linear-gradient(180deg, #060b22 0%, #15224d 100%);
+  border: 1px solid var(--line);
+  display: block;
+}
+.stage-pills {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.sp {
+  padding: 6px 11px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--hi);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+.sp.on {
+  background: var(--acc);
+  color: var(--acc-ink);
+  border-color: var(--acc);
+}
+
+/* 6. Chronological Timeline */
+.vt {
+  position: relative;
+  max-width: 920px;
+  margin: 34px auto 0;
+  padding: 0 20px 0 54px;
+}
+.vt::before {
+  content: "";
+  position: absolute;
+  left: 34px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(var(--acc), var(--line) 10%, var(--line) 90%, transparent);
+}
+.era {
+  margin: 46px 0 18px;
+  padding: 20px 24px;
+  position: relative;
+}
+.era::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  margin-top: -8px;
+  border-radius: 50%;
+  background: var(--acc);
+  box-shadow: 0 0 0 6px var(--hi);
+}
+.era h3 { margin: 0; font-size: 1.46rem; }
+.era p { margin: 5px 0 0; color: var(--mut); font-size: 0.94rem; }
+
+.ti { position: relative; margin: 0 0 14px; }
+.ti::before {
+  content: "";
+  position: absolute;
+  left: -24px;
+  top: 28px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+}
+.tc {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  text-align: left;
+  padding: 0;
+  color: inherit;
+  transition: transform 0.35s var(--spring), border-color 0.25s;
+}
+.tc:hover { transform: translateX(6px); border-color: var(--acc); }
+.tc .ph {
+  flex: 0 0 132px;
+  background: linear-gradient(135deg, #1b254a, #3a2348);
+  position: relative;
+}
+.tc img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.tc img.ok { opacity: 1; }
+.tc .t { padding: 14px 18px; flex: 1; }
+.tc time {
+  font-size: 0.74rem;
+  color: var(--acc);
+  font-weight: 800;
+  letter-spacing: 0.07em;
+}
+.tc b { display: block; font: 600 1.18rem var(--serif); margin-top: 2px; }
+.tc p { font-size: 0.89rem; color: var(--mut); margin: 4px 0 0; }
+.bdg {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 800;
+  padding: 2px 9px;
+  border-radius: 99px;
+  border: 1px solid var(--line);
+  background: var(--hi);
+  color: var(--mut);
+  margin-left: 6px;
+}
+
+/* 7. Rover Race */
+.race .r {
+  display: grid;
+  grid-template-columns: minmax(140px, 250px) 1fr;
+  gap: 16px;
+  align-items: center;
+  margin: 14px 0;
+}
+.race small { color: var(--mut); display: block; font-size: 0.78rem; font-weight: 500; }
+.trk {
+  background: var(--hi);
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  height: 32px;
+  overflow: hidden;
+  padding: 2px;
+}
+.fill {
+  height: 100%;
+  width: 0;
+  border-radius: 99px;
+  transition: width 1.4s var(--ease);
+  display: flex;
+  align-items: center;
+  padding-left: 14px;
+  font-weight: 800;
+  font-size: 0.8rem;
+  color: #0e1322;
+  white-space: nowrap;
+}
+.fill.moon { background: linear-gradient(90deg, #d7dff5, #8ea2d4); }
+.fill.mars { background: linear-gradient(90deg, #ffb48f, #ff6c47); }
+
+/* 8. Student Field Guide (Curiosities, Quiz & Glossary) */
+.flips {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  margin-top: 28px;
+}
+.fl {
+  perspective: 1000px;
+  border: 0;
+  background: none;
+  padding: 0;
+  height: 178px;
+  text-align: left;
+}
+.fl > div {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.75s var(--spring);
+  transform-style: preserve-3d;
+}
+.fl.on > div { transform: rotateY(180deg); }
+.fl span {
+  position: absolute;
+  inset: 0;
+  padding: 20px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  border-radius: 22px;
+}
+.fl .bk {
+  transform: rotateY(180deg);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  background: var(--glass-strong);
+}
+.fl small { color: var(--mut); font-weight: 600; }
+.fl b { font: 600 1.2rem var(--serif); }
+
+.qz { max-width: 780px; margin: 48px auto 0; padding: 30px; }
+.opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin: 10px 0;
+  padding: 14px 18px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--hi);
+  font-weight: 600;
+  transition: transform 0.25s var(--spring), border-color 0.2s;
+}
+.opt:hover:not(:disabled) { transform: translateX(6px); border-color: var(--acc); }
+.opt.ok { background: rgba(52, 199, 118, 0.22); border-color: #34c776; }
+.opt.no { background: rgba(255, 88, 88, 0.2); border-color: #ff5858; }
+.prog {
+  height: 5px;
+  background: var(--hi);
+  border-radius: 99px;
+  margin-bottom: 18px;
+  overflow: hidden;
+}
+.prog i {
+  display: block;
+  height: 100%;
+  background: var(--acc);
+  border-radius: 99px;
+  transition: width 0.5s var(--ease);
+}
+
+.gl {
+  display: grid;
+  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  margin-top: 48px;
+}
+.gl div { padding: 18px 22px; }
+.gl dt { font-weight: 800; color: var(--ink); font-size: 1.02rem; }
+.gl dd { margin: 4px 0 0; color: var(--mut); font-size: 0.92rem; }
+dl { margin: 0; }
+
+/* 9. Sources */
+.fact-box {
+  margin-top: 22px;
+  padding: 20px 24px;
+}
+footer {
+  padding: 44px 0 80px;
+  color: var(--mut);
+  font-size: 0.92rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  align-items: center;
+}
+footer a { font-weight: 700; text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* Responsive Breakpoints */
+@media (max-width: 920px) {
+  .brief-head { grid-template-columns: 1fr; }
+  .atlas-shell {
+    grid-template-columns: 1fr;
+    grid-template-rows: 52svh 48svh;
+    height: auto;
+    min-height: 760px;
+  }
+  .globe-pane { order: 1; border-bottom: 1px solid var(--line); }
+  #side { order: 2; border-right: 0; height: 100%; }
+  #det { transform: translateY(102%); }
+  #det.on { transform: none; }
+  .legend-bar { display: none; }
+}
+
+@media (max-width: 640px) {
+  section { padding: 72px 0; }
+  .tc .ph { flex: 0 0 96px; }
+  .race .r { grid-template-columns: 1fr; gap: 6px; }
+  #telemetry { max-width: calc(100vw - 170px); font-size: 0.68rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .rv { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Minimal Top-Right Utility Cluster (Zero Overlapping Top Home Bar) -->
+<div class="util">
+  <div class="util-row">
+    <button class="ubtn" id="th" aria-label="Toggle light or dark theme" title="Switch theme">☀️ Light</button>
+    <button class="ubtn" id="menuBtn" aria-expanded="false" aria-controls="idx">☰ Sections</button>
+  </div>
+  <div id="idx" role="navigation" aria-label="Section index">
+    <a href="#intro">Prologue: Apollo Staging <span>01</span></a>
+    <a href="#overview">Mission Briefing <span>02</span></a>
+    <a href="#why">Physics: Why It Stays <span>03</span></a>
+    <a href="#atlas">3D Moon &amp; Mars Atlas <span>04</span></a>
+    <a href="#lab">Student Physics Lab <span>05</span></a>
+    <a href="#timeline">Chronological Timeline <span>06</span></a>
+    <a href="#race">Rover Distance Race <span>07</span></a>
+    <a href="#fieldguide">Field Guide &amp; Quiz <span>08</span></a>
+    <a href="#sources">NASA Data &amp; Sources <span>09</span></a>
+  </div>
+</div>
+
+<!-- 1. CINEMATIC SCROLL PROLOGUE: MULTI-STAGE SATURN V & APOLLO DETACHMENTS -->
+<section id="intro">
+  <div class="pin">
+    <canvas id="film" aria-label="Scroll animation showing Saturn V multi-stage launch, S-IC and S-II stage separation, S-IVB trans-lunar injection, CSM-LM docking, Lunar Descent Stage landing, Ascent Stage separation off the descent pad, and Command Module return to Earth"></canvas>
+    <div id="telemetry" aria-live="polite">
+      <b id="tPhase">PRE-LAUNCH · PAD 39A</b>
+      <span id="tDetail">Saturn V Mass: 2,900,000 kg · Scroll to ignite F-1 engines</span>
+    </div>
+    <div id="cap" aria-hidden="true"></div>
+    <div id="ititle">
+      <div class="eyebrow">NASA Space Apps Challenge · Planetary Heritage Atlas</div>
+      <h1>Abandoned,<br><em>but not forgotten.</em></h1>
+      <p>Ever wonder what happens to the landers, rovers, and rocket stages humans leave behind on other worlds? Explore the equipment resting across the Moon and Mars and discover why exploration demands leaving things behind.</p>
+      <div>
+        <a class="cta" href="#overview">Start Mission Briefing ↓</a>
+        <a class="cta g" href="#atlas">Jump to 3D Atlas →</a>
+      </div>
+    </div>
+    <a class="skip" href="#overview">Skip Prologue ↓</a>
+    <i id="fp"></i>
+  </div>
+</section>
+
+<!-- 2. EXECUTIVE MISSION BRIEFING & ANIMATED METRICS -->
+<section id="overview">
+  <canvas id="stars"></canvas>
+  <div class="wrap">
+    <div class="brief-head">
+      <div>
+        <div class="eyebrow rv">01 · Mission Overview</div>
+        <h2 class="rv">Decades of human exploration, preserved on two worlds.</h2>
+        <p class="lead rv">From the pioneering Soviet Luna 2 impactor in 1959 to NASA’s Perseverance rover completing a Martian marathon in June 2026, humanity has left a rich trail of robotic landers, rovers, and descent stages across the Moon and Mars.</p>
+      </div>
+      <div class="glass challenge-badge rv">
+        <b>Curious Student &amp; Researcher Guide</b>
+        Designed for the NASA Space Apps Challenge. Follow the story from rocket staging physics to the interactive 3D planetary globe, hands-on gravity experiments, and mission quiz.
+      </div>
+    </div>
+    <div class="stats" id="stats"></div>
+  </div>
+</section>
+
+<!-- 3. FIRST-PRINCIPLES PHYSICS: WHY HARDWARE STAYS BEHIND -->
+<section id="why">
+  <div class="wrap">
+    <div class="eyebrow rv">02 · Student Physics &amp; Why It Stays</div>
+    <h2 class="rv">Why every kilogram has a price.</h2>
+    <p class="lead rv">Why didn’t astronauts fly their entire spacecraft home? Because escaping gravity obeys an exponential law—and every extra kilogram on the return trip multiplies the fuel required at launch.</p>
+
+    <div class="why">
+      <!-- Card 01 -->
+      <div class="why-card glass rv">
+        <div>
+          <span class="why-num">PRINCIPLE 01 · TSIOLKOVSKY ROCKET EQUATION</span>
+          <h3>Fuel scales exponentially</h3>
+          <p>A rocket must carry the fuel needed to lift its remaining fuel. Dropping empty tanks and unneeded equipment slashes the mass that must be accelerated back into orbit.</p>
+        </div>
+        <div class="fig-box" aria-hidden="true">
+          <svg viewBox="0 0 320 162">
+            <defs>
+              <linearGradient id="gExp" x1="0" y1="1" x2="1" y2="0">
+                <stop offset="0%" stop-color="#5cb0ff"/>
+                <stop offset="100%" stop-color="#ff8a65"/>
+              </linearGradient>
+            </defs>
+            <g stroke="currentColor" stroke-opacity="0.14" stroke-width="1">
+              <line x1="34" y1="132" x2="296" y2="132"/>
+              <line x1="34" y1="22" x2="34" y2="132"/>
+              <line x1="34" y1="78" x2="296" y2="78" stroke-dasharray="3 3"/>
+            </g>
+            <path d="M 36 129 Q 155 122, 286 26" fill="none" stroke="url(#gExp)" stroke-width="3.5" stroke-linecap="round"/>
+            <path d="M 36 129 Q 155 122, 286 26" fill="none" stroke="#ffd9a0" stroke-width="2" class="anim-curve"/>
+            <circle cx="286" cy="26" r="5" fill="#ff8a65"/>
+            <text x="42" y="34" fill="currentColor" opacity="0.7" font-size="10" font-weight="700" font-family="Manrope,sans-serif">PROPELLANT MASS NEEDED</text>
+            <text x="208" y="148" fill="currentColor" opacity="0.7" font-size="10" font-weight="700" font-family="Manrope,sans-serif">PAYLOAD RETURNED →</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 02 -->
+      <div class="why-card glass rv">
+        <div>
+          <span class="why-num">PRINCIPLE 02 · TWO-STAGE LANDER DESIGN</span>
+          <h3>The base becomes a launch pad</h3>
+          <p>Apollo’s golden Descent Stage carried landing legs, radar, and braking propellant. At liftoff, explosive bolts severed the stages so the lighter Ascent Stage could blast off.</p>
+        </div>
+        <div class="fig-box" aria-hidden="true">
+          <svg viewBox="0 0 320 162">
+            <rect x="0" y="136" width="320" height="26" fill="#6d748c" opacity="0.45"/>
+            <g>
+              <line x1="128" y1="110" x2="112" y2="136" stroke="#cfd5e6" stroke-width="3"/>
+              <line x1="192" y1="110" x2="208" y2="136" stroke="#cfd5e6" stroke-width="3"/>
+              <rect x="128" y="100" width="64" height="24" rx="4" fill="#e3b341"/>
+              <text x="160" y="152" text-anchor="middle" fill="currentColor" opacity="0.82" font-size="10" font-weight="700" font-family="Manrope,sans-serif">DESCENT STAGE STAYS ON MOON</text>
+            </g>
+            <g class="anim-ascent">
+              <polygon points="152,98 168,98 160,122" fill="#ffb347" class="anim-plume"/>
+              <rect x="138" y="60" width="44" height="38" rx="10" fill="#e6eaf5"/>
+              <polygon points="150,70 170,70 167,80 153,80" fill="#24356b"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Card 03 -->
+      <div class="why-card glass rv">
+        <div>
+          <span class="why-num">PRINCIPLE 03 · ONE-WAY ROBOTIC EXPLORERS</span>
+          <h3>Built to rove, not return</h3>
+          <p>Robotic landers and rovers carry no ascent rockets. Once lunar night or Martian dust ends their power, their final coordinates become protected heritage sites.</p>
+        </div>
+        <div class="fig-box" aria-hidden="true">
+          <svg viewBox="0 0 320 162">
+            <rect x="0" y="130" width="320" height="32" fill="#a24a2a" opacity="0.35"/>
+            <circle cx="182" cy="66" r="8" fill="none" stroke="#5eead4" stroke-width="2" class="anim-ping"/>
+            <circle cx="182" cy="66" r="8" fill="none" stroke="#5eead4" stroke-width="2" class="anim-ping2"/>
+            <rect x="126" y="98" width="62" height="18" rx="4" fill="#cfd6ea"/>
+            <line x1="182" y1="98" x2="182" y2="68" stroke="#cfd6ea" stroke-width="3"/>
+            <rect x="175" y="62" width="14" height="9" rx="2" fill="#5eead4"/>
+            <circle cx="136" cy="122" r="8" fill="#464d63" stroke="#cfd6ea" stroke-width="2"/>
+            <circle cx="157" cy="122" r="8" fill="#464d63" stroke="#cfd6ea" stroke-width="2"/>
+            <circle cx="178" cy="122" r="8" fill="#464d63" stroke="#cfd6ea" stroke-width="2"/>
+            <text x="160" y="150" text-anchor="middle" fill="currentColor" opacity="0.78" font-size="10" font-weight="700" font-family="Manrope,sans-serif">PRESERVED HERITAGE COORDINATES</text>
+          </svg>
+        </div>
+      </div>
+    </div>
+
+    <div class="glass analogy rv">
+      <span class="analogy-tag">Student Analogy</span>
+      <p style="margin:0;color:var(--mut);font-size:0.96rem"><b style="color:var(--ink)">Think of climbing a steep mountain:</b> To bring home rare mineral samples from the summit, you leave your heavy base-camp tent and empty food canisters behind so you only carry the samples down. On the Moon, leaving behind the 2,034 kg descent stage saved thousands of kilograms of rocket propellant.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. INTERACTIVE 3D PLANETARY ATLAS (SCROLL-SAFE SPLIT / STACKED LAYOUT) -->
+<section id="atlas" aria-label="Interactive 3D Moon and Mars Atlas">
+  <div class="wrap">
+    <div style="margin-bottom:24px">
+      <div class="eyebrow rv">03 · Interactive 3D Planetary Atlas</div>
+      <h2 class="rv">Explore lunar and Martian landing sites.</h2>
+      <p class="lead rv">Switch between the Moon and Mars, filter by spacecraft type, or click any glowing marker on the 3D globe to inspect its story, scientific discoveries, and what hardware remains on the surface.</p>
+    </div>
+
+    <div class="atlas-shell rv">
+      <!-- Dedicated Left Directory & Inspector -->
+      <aside id="side" aria-label="Mission directory and inspector">
+        <div class="hd">
+          <input id="q" type="search" placeholder="Search missions, countries, craters…" aria-label="Search missions">
+          <div class="chips" id="chips"></div>
+        </div>
+        <div id="list"></div>
+        <div id="det" aria-live="polite">
+          <button class="back" id="bk">← All missions</button>
+          <div class="ph"><img id="di" alt=""></div>
+          <div class="bd" id="db"></div>
+        </div>
+      </aside>
+
+      <!-- Dedicated Right 3D Globe Viewport -->
+      <div class="globe-pane">
+        <canvas id="cv"></canvas>
+        <div id="tip" role="tooltip"></div>
+        <div id="scrollToast">Use + / − buttons or Ctrl + Scroll to zoom globe</div>
+
+        <div class="world-sw glass" role="tablist" aria-label="Select celestial body">
+          <button class="seg on" data-w="moon" role="tab" aria-selected="true">🌕 Moon</button>
+          <button class="seg" data-w="mars" role="tab" aria-selected="false">🔴 Mars</button>
+        </div>
+
+        <div class="zoom glass" aria-label="Globe controls">
+          <button id="zi" aria-label="Zoom in" title="Zoom in">+</button>
+          <button id="zo" aria-label="Zoom out" title="Zoom out">−</button>
+          <button id="zr" aria-label="Reset view" title="Reset globe view">⟲</button>
+        </div>
+
+        <div class="legend-bar glass">
+          <span><b style="color:#ffb347">●</b> Crewed</span>
+          <span><b style="color:#5cb0ff">●</b> Lander</span>
+          <span><b style="color:#5eead4">●</b> Rover</span>
+          <span><b style="color:#c4a1ff">●</b> Helicopter</span>
+          <span><b style="color:#ff6b6b">●</b> Crash</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5. HANDS-ON STUDENT PHYSICS & STAGING LAB -->
+<section id="lab">
+  <div class="wrap">
+    <div class="eyebrow rv">04 · Hands-On Physics &amp; Staging Lab</div>
+    <h2 class="rv">Test the physics yourself.</h2>
+    <p class="lead rv">Three interactive student experiments explaining how gravity, multi-stage rocket detachments, and propellant mass govern space exploration.</p>
+
+    <div class="grid">
+      <!-- Experiment 1: Multi-World Gravity Drop -->
+      <div class="lab glass rv">
+        <h3>Exp 1: Three-World Gravity Drop</h3>
+        <canvas id="c1" width="640" height="245"></canvas>
+        <div class="row">
+          <label for="h">Drop height</label>
+          <input type="range" id="h" min="1" max="20" value="10">
+          <b class="out" id="ho">10 m</b>
+        </div>
+        <div class="row">
+          <button class="btn" id="drop">Drop spheres</button>
+          <span id="tt" style="color:var(--mut);font-size:0.84rem"></span>
+        </div>
+      </div>
+
+      <!-- Experiment 2: Interactive 5-Step Apollo Mass & Detachment Simulator -->
+      <div class="lab glass rv">
+        <h3>Exp 2: Apollo Staging &amp; Mass Budget</h3>
+        <svg id="stageSvg" viewBox="0 0 420 245" aria-label="Interactive multi-stage Apollo spacecraft detachment diagram"></svg>
+        <div class="stage-pills" id="stPills"></div>
+        <p id="stDesc" style="color:var(--mut);margin:10px 0 0;font-size:0.85rem"></p>
+      </div>
+
+      <!-- Experiment 3: Tsiolkovsky Propellant Penalty -->
+      <div class="lab glass rv">
+        <h3>Exp 3: The Cost of One Kilogram</h3>
+        <canvas id="c2" width="640" height="245"></canvas>
+        <div class="row">
+          <label for="m">Extra mass kept aboard</label>
+          <input type="range" id="m" min="0" max="500" value="100">
+          <b class="out" id="mo">100 kg</b>
+        </div>
+        <p id="rt" style="color:var(--mut);margin:10px 0 0;font-size:0.85rem"></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 6. CHRONOLOGICAL HISTORY TIMELINE -->
+<section id="timeline">
+  <div class="wrap">
+    <div class="eyebrow rv">05 · Chronological History</div>
+    <h2 class="rv">Every mission, oldest first (1959–2026).</h2>
+    <p class="lead rv">Explore decades of planetary landings across six historical eras. Click any mission card to jump straight to its coordinates on the 3D Atlas.</p>
+    <div class="chips" id="tlf" style="margin-top:16px"></div>
+  </div>
+  <div class="vt" id="tl"></div>
+</section>
+
+<!-- 7. PLANETARY ROVER DISTANCE RACE -->
+<section id="race" class="race">
+  <div class="wrap">
+    <div class="eyebrow rv">06 · Planetary Odometer</div>
+    <h2 class="rv">The great rover distance race.</h2>
+    <p class="lead rv">Total verified driving distance across the Moon and Mars, ranked in kilometres.</p>
+    <div id="rc" style="margin-top:26px"></div>
+  </div>
+</section>
+
+<!-- 8. STUDENT FIELD GUIDE: CURIOSITIES, QUIZ & GLOSSARY -->
+<section id="fieldguide">
+  <div class="wrap">
+    <div class="eyebrow rv">07 · Student Field Guide</div>
+    <h2 class="rv">Surprising artifacts left behind.</h2>
+    <p class="lead rv">Tap any card to flip it and uncover personal mementos, science instruments, and unexpected items resting on the Moon and Mars.</p>
+    <div class="flips" id="fn"></div>
+
+    <div class="qz glass rv" id="qb"></div>
+
+    <div style="margin-top:56px">
+      <div class="eyebrow rv">Quick Reference</div>
+      <h3 class="rv" style="font-size:2rem">Aerospace Glossary</h3>
+      <dl class="gl" id="gl"></dl>
+    </div>
+  </div>
+</section>
+
+<!-- 9. NASA SPACE APPS CHALLENGE PROVENANCE & SOURCES -->
+<section id="sources">
+  <div class="wrap">
+    <div class="eyebrow">08 · Data Provenance &amp; Verification</div>
+    <h2>NASA Space Apps Challenge Sources</h2>
+    <p class="lead">All mission dates, masses, and planetary coordinates are compiled from NASA’s Space Science Data Coordinated Archive (NSSDC), Lunar Reconnaissance Orbiter (LRO) imagery, Mars Reconnaissance Orbiter (HiRISE), and official space agency mission logs. Archival thumbnails load dynamically via Wikipedia’s REST API.</p>
+    <div class="glass fact-box">
+      <p style="margin:0;color:var(--mut);font-size:0.93rem"><b style="color:var(--ink)">Verification &amp; Fact-Check Log (November 2026):</b> IM-1 Odysseus landing site verified at 80.13°S, 1.44°E; SpaceX Falcon 9 upper-stage impact crater confirmed 5 Aug 2026 near Einstein crater (19.4759°N, 93.2862°W / 266.7138°E via NASA LRO); Perseverance marathon milestone (42.20 km) verified 14 Jun 2026 on sol 1,890; Apollo 16 Lunar Roving Vehicle odometer confirmed at 26.70 km. Early Soviet Mars lander coordinates marked “estimated” reflect best orbital tracking bounds.</p>
+    </div>
+    <footer>
+      <a href="https://nssdc.gsfc.nasa.gov/nmc/" target="_blank" rel="noopener">NASA NSSDC Master Catalog ↗</a>
+      <span>·</span>
+      <a href="https://images.nasa.gov" target="_blank" rel="noopener">NASA Image &amp; Video Library ↗</a>
+      <span>·</span>
+      <a href="https://pds.nasa.gov" target="_blank" rel="noopener">NASA Planetary Data System ↗</a>
+      <span>·</span>
+      <a href="https://en.wikipedia.org" target="_blank" rel="noopener">Wikipedia Open Archive ↗</a>
+    </footer>
+  </div>
+</section>
+
+<script>
+const NSSDC = id => 'https://nssdc.gsfc.nasa.gov/nmc/spacecraft/display.action?id=' + id;
+
+const MISSIONS = [
+/* ------------------------------ MOON ------------------------------ */
+{id:'luna2',w:'moon',name:'Luna 2',who:'Soviet Union',date:'1959-09-13',dt:'13 Sep 1959',kind:'crash',status:'crashed',lat:29.1,lon:0,loc:'Near side, Palus Putredinis near Archimedes crater',
+ stat:'Crashed on purpose (first human-made impactor)',
+ story:'The first human-made object ever to reach another world. Built to impact the Moon directly, it carried spherical metal pennants bearing the Soviet coat of arms.',
+ goal:'Reach the lunar surface and measure radiation and magnetic fields in cislunar space.',
+ why:'It was a direct-ascent impactor with no landing engines or return capability.',
+ found:'Confirmed that the Moon has no appreciable global magnetic field or radiation belts.',
+ fun:'The 9,100 kg upper stage of its Vostok-L rocket also impacted the Moon roughly 30 minutes later.',
+ left:['Impactor probe (≈390 kg)','Vostok upper stage (≈9,100 kg)','Stainless-steel Soviet pennants'],nssdc:'1959-014A'},
+
+{id:'ranger4',w:'moon',name:'Ranger 4',who:'United States',date:'1962-04-26',dt:'26 Apr 1962',kind:'crash',status:'crashed',lat:-15.5,lon:-130.7,loc:'Far side of the Moon',
+ stat:'Crashed (central computer timer failed)',
+ story:'The first US spacecraft to reach the Moon, though an onboard timer failure prevented its solar panels from deploying and silenced its transmitter before impact.',
+ goal:'Transmit high-resolution approach images and drop a rough-landing seismometer capsule.',
+ why:'Without power or attitude control, it struck the lunar far side at ~9,600 km/h.',
+ found:'Radar tracking confirmed the impact trajectory, helping engineers redesign Ranger Block III.',
+ fun:'It became the first spacecraft from any nation to reach the far side of the Moon.',
+ left:['Spacecraft bus & balsa-wood capsule (≈331 kg)'],nssdc:'1962-012A'},
+
+{id:'luna9',w:'moon',name:'Luna 9',who:'Soviet Union',date:'1966-02-03',dt:'3 Feb 1966',kind:'lander',status:'silent',lat:7.08,lon:-64.37,loc:'Oceanus Procellarum (Ocean of Storms)',
+ stat:'Transmitted ~3 days, then batteries depleted',
+ story:'The first spacecraft to achieve a survivable soft landing on another world. Its petal-like spherical capsule unfolded and transmitted the first panoramic photographs from the lunar surface.',
+ goal:'Demonstrate a soft lunar landing and prove the surface could support a spacecraft.',
+ why:'Powered solely by onboard batteries with no ascent engine.',
+ found:'Proved that lunar regolith is firm enough to support a lander rather than swallowing it in deep dust.',
+ fun:'The ejectable landing capsule weighed just 99 kg and cushioned touchdown with airbags.',
+ left:['Petal landing capsule (≈99 kg)','Ejected airbag shells'],nssdc:'1966-006A'},
+
+{id:'surveyor1',w:'moon',name:'Surveyor 1',who:'United States',date:'1966-06-02',dt:'2 Jun 1966',kind:'lander',status:'silent',lat:-2.474,lon:-43.339,loc:'Oceanus Procellarum',
+ stat:'Silent since Jan 1967',
+ story:'America’s first soft lunar landing, succeeding on its maiden attempt and validating radar-guided terminal descent for the upcoming Apollo missions.',
+ goal:'Verify soft-landing engineering and survey flat mare terrain for Apollo.',
+ why:'Uncrewed robotic lander with no return propulsion.',
+ found:'Transmitted over 11,200 high-resolution television frames of rocks and soil.',
+ fun:'It survived the freezing 14-day lunar night and responded to commands months later.',
+ left:['Surveyor lander (≈270 kg landed mass)'],nssdc:'1966-045A'},
+
+{id:'luna13',w:'moon',name:'Luna 13',who:'Soviet Union',date:'1966-12-24',dt:'24 Dec 1966',kind:'lander',status:'silent',lat:18.87,lon:-62.05,loc:'Oceanus Procellarum',
+ stat:'Silent since Dec 1966',
+ story:'A second petal-style Soviet lander equipped with twin mechanical arms that drove a penetrometer and radiation densimeter directly into the lunar soil.',
+ goal:'Measure the mechanical strength and density of the top layer of regolith.',
+ why:'One-way battery-powered lander.',
+ found:'Confirmed soil bearing strength closely matched Earth volcanic ash or medium-density sand.',
+ fun:'It touched down on Christmas Eve 1966.',
+ left:['Landing capsule (≈113 kg)'],nssdc:'1966-116A'},
+
+{id:'surveyor3',w:'moon',name:'Surveyor 3',who:'United States',date:'1967-04-20',dt:'20 Apr 1967',kind:'lander',status:'silent',lat:-3.015,lon:-23.418,loc:'Oceanus Procellarum',
+ stat:'Silent; visited by Apollo 12 astronauts in 1969',
+ story:'Equipped with a small claw scoop, Surveyor 3 dug trenches in the Moon. Thirty-one months later, Apollo 12 astronauts Pete Conrad and Alan Bean walked right up to it.',
+ goal:'Test soil cohesion by trenching and bearing-load tests.',
+ why:'Designed as a stationary robot; the main frame stayed behind after Apollo 12 sampled its parts.',
+ found:'Revealed how lunar soil clumps vertically when cut.',
+ fun:'Apollo 12 removed its TV camera and scoop (~10 kg) and brought them back to Earth for aging analysis.',
+ left:['Lander frame (minus camera & scoop)'],nssdc:'1967-035A'},
+
+{id:'surveyor5',w:'moon',name:'Surveyor 5',who:'United States',date:'1967-09-11',dt:'11 Sep 1967',kind:'lander',status:'silent',lat:1.461,lon:23.195,loc:'Mare Tranquillitatis (Sea of Tranquility)',
+ stat:'Silent since Dec 1967',
+ story:'Despite a helium leak during flight, engineers improvised a new descent profile and landed Surveyor 5 safely in the Sea of Tranquility.',
+ goal:'Perform the first in-situ chemical analysis of lunar soil using alpha-particle scattering.',
+ why:'One-way robotic science station.',
+ found:'Showed the maria consist primarily of basaltic rock formed from ancient lava flows.',
+ fun:'Landed just 25 km from the future Apollo 11 touchdown site.',
+ left:['Lander (≈281 kg)'],nssdc:'1967-084A'},
+
+{id:'surveyor6',w:'moon',name:'Surveyor 6',who:'United States',date:'1967-11-10',dt:'10 Nov 1967',kind:'lander',status:'silent',lat:0.474,lon:-1.4275,loc:'Sinus Medii (Central Bay)',
+ stat:'Silent since Dec 1967',
+ story:'After completing its primary photo survey, Surveyor 6 reignited its vernier thrusters for 2.5 seconds, lifting off the Moon and hopping 2.4 metres sideways.',
+ goal:'Survey Sinus Medii and perform the first controlled liftoff from the lunar surface.',
+ why:'The hop used remaining landing fuel; it had no capability to reach orbit.',
+ found:'Stereo images taken before and after the hop mapped terrain in 3D and measured exhaust dust effects.',
+ fun:'Its 17 November 1967 hop was humanity’s very first rocket launch from another celestial body.',
+ left:['Lander (≈282 kg)'],nssdc:'1967-112A'},
+
+{id:'surveyor7',w:'moon',name:'Surveyor 7',who:'United States',date:'1968-01-10',dt:'10 Jan 1968',kind:'lander',status:'silent',lat:-40.98,lon:-11.514,loc:'Highlands near Tycho crater rim',
+ stat:'Silent since Feb 1968',
+ story:'The final Surveyor mission ventured into the rugged southern highlands near the bright ray crater Tycho.',
+ goal:'Sample ancient highland crust rich in aluminum and calcium.',
+ why:'One-way robotic lander.',
+ found:'Confirmed highland rocks are lighter and older (anorthositic) than dark mare basalts.',
+ fun:'Its camera successfully detected green argon-ion laser beams fired from observatories on Earth.',
+ left:['Lander (≈290 kg)'],nssdc:'1968-001A'},
+
+{id:'apollo11',w:'moon',name:'Apollo 11',who:'United States (NASA)',date:'1969-07-20',dt:'20 Jul 1969',kind:'crewed',status:'left',live:true,lat:0.6741,lon:23.4730,loc:'Mare Tranquillitatis (Tranquility Base)',
+ stat:'First human Moon landing; laser reflector still active',
+ story:'Neil Armstrong and Buzz Aldrin landed Lunar Module Eagle on the Sea of Tranquility and spent 2 hours 31 minutes exploring on foot while Michael Collins orbited above.',
+ goal:'Land humans on the Moon and return them safely to Earth.',
+ why:'Every kilogram lifted back to lunar orbit demanded extra propellant. Leaving the heavy descent stage and surface gear enabled Eagle’s ascent cabin to carry 21.5 kg of rocks home.',
+ found:'Returned 21.55 kg of lunar basalt and breccia; its retroreflector still bounces Earth lasers today.',
+ fun:'Before closing the hatch, the crew tossed cameras, boots, and empty containers onto the surface to trim weight.',
+ left:['Eagle descent stage (≈2,034 kg)','US flag & stainless plaque','Silicon Goodwill disc (73 nations)','Apollo 1 patch & cosmonaut medals','Laser retroreflector & seismometer','Cameras, boots, tools & jettison bags'],nssdc:'1969-059C'},
+
+{id:'apollo12',w:'moon',name:'Apollo 12',who:'United States (NASA)',date:'1969-11-19',dt:'19 Nov 1969',kind:'crewed',status:'left',lat:-3.0124,lon:-23.4216,loc:'Oceanus Procellarum',
+ stat:'Pinpoint crewed landing; ALSEP station left',
+ story:'Pete Conrad and Alan Bean executed a pinpoint landing just 163 metres from Surveyor 3, deploying the first nuclear-powered ALSEP geophysical observatory.',
+ goal:'Demonstrate precision landing, deploy long-lived instruments, and inspect Surveyor 3.',
+ why:'The descent stage served as the launch platform for Intrepid’s ascent stage.',
+ found:'Intrepid’s empty ascent stage was intentionally crashed into the Moon, causing seismic waves that reverberated for nearly an hour.',
+ fun:'Returned 34.3 kg of samples plus Surveyor 3 hardware.',
+ left:['Intrepid descent stage (≈2,211 kg)','ALSEP geophysical station','Surface tools & jettisoned gear'],nssdc:'1969-099C'},
+
+{id:'luna16',w:'moon',name:'Luna 16',who:'Soviet Union',date:'1970-09-20',dt:'20 Sep 1970',kind:'lander',status:'silent',lat:-0.68,lon:56.3,loc:'Mare Fecunditatis (Sea of Fertility)',
+ stat:'Robotic sample return; descent stage left behind',
+ story:'The first robotic spacecraft to drill lunar soil and return a sealed sample capsule automatically to Earth.',
+ goal:'Collect a core sample and launch it back to Earth without human crew.',
+ why:'Only the small upper return rocket launched; the heavy landing stage stayed as a launch pad.',
+ found:'Returned 101 grams of dark mare basalt.',
+ fun:'Completed the first fully automated sample return from another celestial body.',
+ left:['Landing stage (≈1,380 kg)'],nssdc:'1970-072A'},
+
+{id:'lunokhod1',w:'moon',name:'Lunokhod 1 (Luna 17)',who:'Soviet Union',date:'1970-11-17',dt:'17 Nov 1970',kind:'rover',status:'silent',live:true,lat:38.28,lon:-35.0,loc:'Mare Imbrium (Sea of Rains)',
+ stat:'Operated 10 months; laser reflector rediscovered in 2010',
+ story:'An eight-wheeled, tub-shaped robotic rover driven in real time from Earth by a five-person crew, becoming the first roving vehicle on another world.',
+ goal:'Traverse Mare Imbrium, transmit television panoramas, and test soil strength.',
+ why:'Its polonium-210 radioisotope heater depleted in September 1971; no return vehicle existed.',
+ found:'Drove 10.54 km and returned more than 20,000 TV images and 500 soil tests.',
+ fun:'After being lost for 39 years, NASA’s LRO spotted Lunokhod 1 in 2010 and astronomers bounced laser pulses off its French retroreflector.',
+ left:['Luna 17 descent stage','Lunokhod 1 rover (≈756 kg)','French laser retroreflector'],nssdc:'1970-095A'},
+
+{id:'apollo14',w:'moon',name:'Apollo 14',who:'United States (NASA)',date:'1971-02-05',dt:'5 Feb 1971',kind:'crewed',status:'left',live:true,lat:-3.6453,lon:-17.4714,loc:'Fra Mauro highlands',
+ stat:'Crewed highland landing; laser reflector still active',
+ story:'Alan Shepard and Edgar Mitchell hiked up the hilly Fra Mauro formation using a two-wheeled Modular Equipment Transporter handcart.',
+ goal:'Sample ancient ejecta excavated by the giant Imbrium basin impact.',
+ why:'Antares’ descent stage and the handcart remained on the Moon to preserve ascent fuel.',
+ found:'Returned 42.3 kg of highland breccias; its laser reflector remains active today.',
+ fun:'Alan Shepard famously struck two golf balls using a makeshift 6-iron head attached to a sample tool.',
+ left:['Antares descent stage (≈2,144 kg)','ALSEP station & laser reflector','Two-wheeled tool cart','Two golf balls'],nssdc:'1971-008C'},
+
+{id:'apollo15',w:'moon',name:'Apollo 15',who:'United States (NASA)',date:'1971-07-30',dt:'30 Jul 1971',kind:'crewed',status:'left',live:true,lat:26.1322,lon:3.6339,loc:'Hadley–Apennine region',
+ stat:'First Lunar Roving Vehicle; reflector still active',
+ story:'David Scott and James Irwin drove the first electric Lunar Roving Vehicle along the rim of Hadley Rille and the base of the Apennine mountains.',
+ goal:'Conduct extended geological traverses across mountains and a volcanic rille.',
+ why:'The 210 kg Moon buggy could not fit inside the ascent cabin and was parked to film the liftoff.',
+ found:'Returned 77.3 kg of rocks, including the 4.1-billion-year-old crystalline “Genesis Rock”.',
+ fun:'Scott dropped a geological hammer and a falcon feather simultaneously—proving Galileo’s law in airless lunar gravity.',
+ left:['Falcon descent stage (≈2,809 kg)','Lunar Roving Vehicle (≈210 kg)','Fallen Astronaut sculpture & plaque','Hammer, feather, ALSEP & reflector'],nssdc:'1971-063C'},
+
+{id:'apollo16',w:'moon',name:'Apollo 16',who:'United States (NASA)',date:'1972-04-21',dt:'21 Apr 1972',kind:'crewed',status:'left',lat:-8.973,lon:15.5002,loc:'Descartes Highlands',
+ stat:'Crewed highland mission; second Moon buggy left',
+ story:'John Young and Charles Duke explored the bright Descartes Highlands, driving 26.7 km across crater rims.',
+ goal:'Investigate whether the lunar highlands were formed by volcanism or ancient meteorite impacts.',
+ why:'Orion’s descent stage and rover stayed behind so the ascent cabin could reach orbit.',
+ found:'Returned 95.7 kg of impact breccias, proving impacts shaped the highlands.',
+ fun:'Charles Duke left a plastic-encased photograph of his family on the lunar dust.',
+ left:['Orion descent stage (≈2,765 kg)','Lunar Roving Vehicle (≈210 kg)','Duke family photograph & ALSEP'],nssdc:'1972-031C'},
+
+{id:'apollo17',w:'moon',name:'Apollo 17',who:'United States (NASA)',date:'1972-12-11',dt:'11 Dec 1972',kind:'crewed',status:'left',lat:20.1908,lon:30.7717,loc:'Taurus–Littrow valley',
+ stat:'Most recent human Moon landing (Dec 1972)',
+ story:'Commander Eugene Cernan and geologist-astronaut Harrison Schmitt spent over 22 hours outside Challenger, driving 35.9 km across Taurus–Littrow valley.',
+ goal:'Sample both ancient highland massifs and younger volcanic valley floors.',
+ why:'Leaving the descent stage and rover allowed the crew to bring back 110.5 kg of samples—the largest Apollo haul.',
+ found:'Discovered vivid orange soil composed of tiny volcanic glass beads erupted 3.64 billion years ago.',
+ fun:'Its plaque reads: “Here Man completed his first explorations of the Moon, December 1972 A.D.”',
+ left:['Challenger descent stage (≈2,798 kg)','Lunar Roving Vehicle (≈210 kg)','Commemorative plaque & ALSEP'],nssdc:'1972-096C'},
+
+{id:'lunokhod2',w:'moon',name:'Lunokhod 2 (Luna 21)',who:'Soviet Union',date:'1973-01-15',dt:'15 Jan 1973',kind:'rover',status:'silent',live:true,lat:25.85,lon:30.45,loc:'Le Monnier crater (eastern Mare Serenitatis)',
+ stat:'Silent since May 1973; laser reflector active',
+ story:'An upgraded, faster Soviet Moon rover that traversed 39 km in four months—holding the off-Earth driving distance record for 41 years.',
+ goal:'Explore the transition zone between Mare Serenitatis and the Taurus mountains.',
+ why:'Overheated in May 1973 after lunar dust accidentally spilled onto its radiator during a crater climb.',
+ found:'Returned 86 panoramic images and over 80,000 TV frames.',
+ fun:'Its retroreflector is still routinely ranged by laser stations on Earth.',
+ left:['Luna 21 lander','Lunokhod 2 rover (≈840 kg)','Laser retroreflector'],nssdc:'1973-001A'},
+
+{id:'luna24',w:'moon',name:'Luna 24',who:'Soviet Union',date:'1976-08-18',dt:'18 Aug 1976',kind:'lander',status:'silent',lat:12.75,lon:62.2,loc:'Mare Crisium (Sea of Crises)',
+ stat:'Final Soviet lunar landing; core returned',
+ story:'Drilled 2 metres into Mare Crisium and launched 170.1 grams of stratified lunar soil back to Earth.',
+ goal:'Obtain a deep, undisturbed core sample of lunar regolith.',
+ why:'Only the small return capsule ascended; the main lander remained in Mare Crisium.',
+ found:'Revealed clear stratigraphic layers deposited over hundreds of millions of years.',
+ fun:'Marked the final soft landing on the Moon for 37 years until Chang’e 3 in 2013.',
+ left:['Lander descent base'],nssdc:'1976-081A'},
+
+{id:'saturn',w:'moon',name:'Five Saturn V S-IVB Stages',who:'United States (NASA)',date:'1970-04-14',dt:'Apr 1970 – Dec 1972',kind:'crash',status:'crashed',lat:-2.75,lon:-27.86,
+ pts:[[-2.75,-27.86],[-8.09,-26.02],[-1.51,-11.81],[1.921,-24.623],[-4.21,-12.31]],loc:'Near side (Apollo 13, 14, 15, 16 & 17 impact sites)',
+ stat:'5 spent upper stages crashed for seismic science',
+ story:'After boosting Apollo spacecraft toward the Moon, five Saturn V third stages (S-IVB) were steered into deliberate lunar impacts. Weighing ~14,000 kg each, they are the heaviest human artifacts on the Moon.',
+ goal:'Generate calibrated seismic energy waves for the Apollo ALSEP seismometers.',
+ why:'Spent rocket stages had no further mission use and provided free active seismology.',
+ found:'Allowed geophysicists to map the thickness of the lunar crust and upper mantle.',
+ fun:'All five impact craters have been photographed by NASA’s Lunar Reconnaissance Orbiter.',
+ left:['5 S-IVB stages (≈13,500–14,000 kg each)'],nssdc:'1970-029B'},
+
+{id:'change3',w:'moon',name:'Chang’e 3 & Yutu',who:'China (CNSA)',date:'2013-12-14',dt:'14 Dec 2013',kind:'rover',status:'silent',lat:44.12,lon:-19.51,loc:'Mare Imbrium',
+ stat:'Yutu rover silent since Aug 2016',
+ story:'China’s first soft landing on another world, deploying the 140 kg Yutu (“Jade Rabbit”) rover equipped with ground-penetrating radar.',
+ goal:'Demonstrate soft landing and surface roving with subsurface radar.',
+ why:'One-way robotic lander and rover; Yutu lost mobility after its second lunar night.',
+ found:'Discovered a previously unknown type of young titanium-rich basalt and mapped nine subsurface layers.',
+ fun:'Ended a 37-year hiatus in soft lunar landings since Luna 24 in 1976.',
+ left:['Chang’e 3 lander (≈1,200 kg)','Yutu rover (≈140 kg)'],nssdc:null},
+
+{id:'change4',w:'moon',name:'Chang’e 4 & Yutu-2',who:'China (CNSA)',date:'2019-01-03',dt:'3 Jan 2019',kind:'rover',status:'active',lat:-45.4561,lon:177.5885,loc:'Von Kármán crater (South Pole–Aitken basin, far side)',
+ stat:'First far-side soft landing; Yutu-2 still active',
+ story:'Humanity’s first soft landing on the lunar far side, communicating with Earth via the Queqiao relay satellite parked beyond the Moon.',
+ goal:'Explore the ancient South Pole–Aitken impact basin on the far side.',
+ why:'One-way robotic mission; Yutu-2 continues driving across Von Kármán crater.',
+ found:'Detected glass globules and mantle-derived minerals excavated from deep beneath the crust.',
+ fun:'A sealed biosphere aboard the lander briefly sprouted a cotton seed—the first plant to grow on the Moon.',
+ left:['Chang’e 4 lander (≈1,200 kg)','Yutu-2 rover (≈140 kg)'],nssdc:null},
+
+{id:'chandrayaan2',w:'moon',name:'Chandrayaan-2 (Vikram)',who:'India (ISRO)',date:'2019-09-07',dt:'7 Sep 2019',kind:'crash',status:'crashed',lat:-70.881,lon:22.784,loc:'Highlands between Manzinus C and Simpelius N',
+ stat:'Lander crashed; orbiter continues operating',
+ story:'Vikram descended smoothly until an attitude-control anomaly just 2.1 km above the surface caused a hard impact.',
+ goal:'Deliver India’s first lander and Pragyan rover to high southern latitudes.',
+ why:'Hard impact destroyed the lander; its debris field was spotted in NASA LRO images.',
+ found:'The Chandrayaan-2 orbiter remains active in lunar orbit and mapped landing sites for Chandrayaan-3.',
+ fun:'Chennai engineer Shanmuga Subramanian helped identify Vikram’s debris in public LRO imagery.',
+ left:['Vikram lander & Pragyan rover debris (≈1,471 kg)'],nssdc:null},
+
+{id:'change5',w:'moon',name:'Chang’e 5',who:'China (CNSA)',date:'2020-12-01',dt:'1 Dec 2020',kind:'lander',status:'silent',lat:43.0576,lon:-51.9161,loc:'Northern Oceanus Procellarum (near Mons Rümker)',
+ stat:'Returned 1.73 kg of young lava samples; lander left',
+ story:'Scooped and drilled 1,731 grams of lunar regolith and launched an ascent vehicle from the lander roof to rendezvous in lunar orbit.',
+ goal:'Collect the youngest volcanic rocks on the Moon.',
+ why:'Only the sample return capsule came back to Earth; the lander platform remained behind.',
+ found:'Dated the basalts to ~2.0 billion years old—proving lunar volcanism lasted 1 billion years longer than Apollo samples showed.',
+ fun:'First lunar sample return since 1976.',
+ left:['Chang’e 5 lander platform (≈3,200 kg)'],nssdc:null},
+
+{id:'hakuto1',w:'moon',name:'Hakuto-R Mission 1',who:'Japan (ispace)',date:'2023-04-25',dt:'25 Apr 2023',kind:'crash',status:'crashed',lat:47.581,lon:44.094,loc:'Near Atlas crater (Mare Frigoris border)',
+ stat:'Crashed during final descent',
+ story:'A commercial Japanese lander whose onboard altitude software rejected legitimate laser rangefinder data as it crossed a crater rim, causing it to run out of propellant 5 km up.',
+ goal:'Achieve the first commercial soft landing on the Moon and deploy the UAE Rashid rover.',
+ why:'Hard impact after propellant exhaustion.',
+ found:'Identified a software filtering edge-case over steep crater rims.',
+ fun:'Carried the United Arab Emirates’ 10 kg Rashid rover and JAXA’s transformable SORA-Q robot.',
+ left:['Lander & payload debris (≈340 kg)'],nssdc:null},
+
+{id:'luna25',w:'moon',name:'Luna 25',who:'Russia (Roscosmos)',date:'2023-08-19',dt:'19 Aug 2023',kind:'crash',status:'crashed',lat:-57.865,lon:61.36,loc:'Pontécoulant G crater rim',
+ stat:'Crashed during pre-landing orbit maneuver',
+ story:'Russia’s first lunar mission since 1976 suffered a thruster burn that lasted 127 seconds instead of 84 seconds, sending the craft onto an impact trajectory.',
+ goal:'Soft-land near the lunar south pole to search for water ice.',
+ why:'Impacted the surface at ~1.7 km/s, excavating a fresh 10-metre crater imaged by LRO.',
+ found:'Confirmed telemetry timing vulnerability in main engine cutoff.',
+ fun:'Impacted just four days before India’s Chandrayaan-3 touched down safely.',
+ left:['Luna 25 wreckage (≈1,750 kg)'],nssdc:null},
+
+{id:'chandrayaan3',w:'moon',name:'Chandrayaan-3 (Vikram & Pragyan)',who:'India (ISRO)',date:'2023-08-23',dt:'23 Aug 2023',kind:'rover',status:'silent',live:true,lat:-69.373,lon:32.319,loc:'Shiv Shakti Point (69.37°S southern highlands)',
+ stat:'First soft landing near the lunar south pole',
+ story:'India became the fourth nation to soft-land on the Moon and the first to touch down in the high southern polar highlands. Pragyan rolled down Vikram’s ramp and traversed ~101 metres.',
+ goal:'Demonstrate safe polar landing, roving, and in-situ elemental analysis.',
+ why:'Designed to operate for one lunar daylight period (14 Earth days) before entering permanent sleep at sunset.',
+ found:'Confirmed sulfur in southern highland soil and measured steep subsurface thermal gradients (+70 °C at surface vs −10 °C just 8 cm below).',
+ fun:'Vikram also performed a surprise 40 cm “hop” experiment before sunset to validate future sample-return liftoffs.',
+ left:['Vikram lander & Pragyan rover (≈1,752 kg)','NASA Laser Retroreflector Array'],nssdc:null},
+
+{id:'slim',w:'moon',name:'SLIM “Moon Sniper”',who:'Japan (JAXA)',date:'2024-01-19',dt:'19 Jan 2024',kind:'lander',status:'silent',lat:-13.316,lon:25.251,loc:'Rim of Shioli crater',
+ stat:'Pinpoint landing within 55 m; survived three lunar nights',
+ story:'Demonstrated vision-based pinpoint navigation, landing within 55 metres of its target. Although one main nozzle failed and SLIM tipped onto its nose, it survived multiple freezing lunar nights.',
+ goal:'Prove <100-metre pinpoint landing accuracy for future resource exploration.',
+ why:'Stationary robotic lander; communications ended in April 2024 after surviving three lunar nights.',
+ found:'Analyzed olivine-rich rocks ejected from the Moon’s mantle.',
+ fun:'Ejected two tiny hopping/rolling micro-rovers (LEV-1 and LEV-2), including a baseball-sized sphere that photographed SLIM resting upside-down.',
+ left:['SLIM lander (≈119 kg dry)','LEV-1 & LEV-2 micro-rovers'],nssdc:null},
+
+{id:'im1',w:'moon',name:'IM-1 Odysseus',who:'United States (Intuitive Machines)',date:'2024-02-22',dt:'22 Feb 2024',kind:'lander',status:'silent',lat:-80.13,lon:1.44,loc:'Near Malapert A crater (80.13°S)',
+ stat:'First commercial Moon landing; tipped on landing leg',
+ story:'The first US lunar landing since Apollo 17 and the first soft landing by a private company. Touching down with lateral velocity, a landing leg caught and tipped Odysseus onto its side, yet it transmitted data for a week.',
+ goal:'Deliver six NASA CLPS science instruments to the south polar region.',
+ why:'One-way commercial lander; powered down when solar angle dropped at lunar sunset.',
+ found:'Tested precision lidar navigation and radio-frequency propellant gauging in deep space.',
+ fun:'Landed farther south (80.13°S) than any previous spacecraft.',
+ left:['Odysseus lander (≈1,903 kg)'],nssdc:null},
+
+{id:'change6',w:'moon',name:'Chang’e 6',who:'China (CNSA)',date:'2024-06-01',dt:'1 Jun 2024',kind:'lander',status:'silent',lat:-41.6385,lon:-153.9852,loc:'Southern Apollo basin (far side)',
+ stat:'First far-side sample return (1.935 kg returned)',
+ story:'Touched down in the massive Apollo basin on the Moon’s far side, drilled and scooped 1,935.3 grams of material, and launched an ascent stage back to lunar orbit for return to Earth.',
+ goal:'Return the first physical samples from the lunar far side.',
+ why:'Only the sample return capsule returned to Earth; the lander base and mini-rover stayed behind.',
+ found:'Samples are unlocking why the lunar far side has a thicker crust and far fewer volcanic plains than the near side.',
+ fun:'Deployed a 5 kg autonomous mini-rover named Jinchan that snapped a selfie of the lander on the far side.',
+ left:['Chang’e 6 lander base (≈3,200 kg)','Jinchan mini-rover (≈5 kg)'],nssdc:null},
+
+{id:'blueghost',w:'moon',name:'Blue Ghost Mission 1',who:'United States (Firefly Aerospace)',date:'2025-03-02',dt:'2 Mar 2025',kind:'lander',status:'silent',lat:18.5623,lon:61.8103,loc:'Mare Crisium (near Mons Latreille)',
+ stat:'Operated full 14-day lunar day plus sunset glow',
+ story:'Landed upright and operated flawlessly for 14 Earth days in Mare Crisium, running ten NASA CLPS instruments including subsurface heat-flow probes and regolith vacuums.',
+ goal:'Deliver ten NASA technology and science payloads to Mare Crisium.',
+ why:'Designed for one lunar daylight cycle; shut down cleanly hours after lunar sunset.',
+ found:'Captured high-definition video of a total solar eclipse (Earth blocking the Sun) from the lunar surface.',
+ fun:'Operated for more than five hours into the freezing lunar night before batteries depleted.',
+ left:['Blue Ghost lander (≈469 kg)'],nssdc:null},
+
+{id:'im2',w:'moon',name:'IM-2 Athena',who:'United States (Intuitive Machines)',date:'2025-03-06',dt:'6 Mar 2025',kind:'lander',status:'silent',lat:-84.7906,lon:29.1957,loc:'Mons Mouton plateau (84.79°S)',
+ stat:'Tipped inside a shadowed crater near south pole',
+ story:'Aimed for the Mons Mouton plateau near the south pole, touching down inside a small crater where low sun angles prevented its solar arrays from recharging.',
+ goal:'Test NASA’s PRIME-1 ice-mining drill and mass spectrometer near the south pole.',
+ why:'Low sunlight inside the crater depleted batteries shortly after landing.',
+ found:'Highlighted extreme terrain and lighting challenges at >84° south latitude.',
+ fun:'Carried the Micro Nova rocket hopper “Grace” and Lunar Outpost’s MAPP rover.',
+ left:['Athena lander (≈1,919 kg) & surface rovers'],nssdc:null},
+
+{id:'hakuto2',w:'moon',name:'Hakuto-R Mission 2 “Resilience”',who:'Japan (ispace)',date:'2025-06-06',dt:'6 Jun 2025',kind:'crash',status:'crashed',lat:60.4445,lon:-4.588,loc:'Mare Frigoris (Sea of Cold)',
+ stat:'Crashed during terminal descent',
+ story:'ispace’s second lunar lander suffered a laser rangefinder delay during final deceleration in Mare Frigoris, impacting the surface at high speed.',
+ goal:'Soft-land in Mare Frigoris and deploy the Tenacious micro-rover.',
+ why:'Hard impact after insufficient braking; NASA LRO imaged the fresh impact scar.',
+ found:'Confirmed high-speed altimeter locking challenges over low-contrast northern maria.',
+ fun:'Shared its January 2025 Falcon 9 launch ride with Firefly’s Blue Ghost 1.',
+ left:['Resilience lander & Tenacious rover debris (≈340 kg)'],nssdc:null},
+
+{id:'falcon9',w:'moon',name:'SpaceX Falcon 9 Upper Stage',who:'United States (SpaceX)',date:'2026-08-05',dt:'5 Aug 2026',kind:'crash',status:'crashed',lat:19.4759,lon:-93.2862,loc:'Far side, near Einstein crater (266.71°E)',
+ stat:'Impacted Aug 2026; 18-metre crater imaged by LRO',
+ story:'A spent Falcon 9 second stage from the January 2025 dual-lander launch remained in deep-space orbit before intersecting the lunar far side on 5 August 2026. NASA’s LRO photographed the fresh 18-metre crater days later.',
+ goal:'None—spent launch vehicle hardware following a chaotic cislunar trajectory.',
+ why:'Upper stages are not equipped for retrieval once expended.',
+ found:'Provided a known-mass, known-velocity calibration impact for crater-scaling models.',
+ fun:'Confirmed at 19.4759°N, 266.7138°E (93.2862°W) by LRO before-and-after imaging.',
+ left:['Falcon 9 second stage (~3,900 kg dry mass)'],nssdc:null},
+
+/* ------------------------------ MARS ------------------------------ */
+{id:'mars2',w:'mars',name:'Mars 2 Lander',who:'Soviet Union',date:'1971-11-27',dt:'27 Nov 1971',kind:'crash',status:'crashed',lat:-45,lon:47,loc:'Southern highlands (estimated)',
+ stat:'First human-made object to reach Mars (crashed)',
+ story:'Released during a planet-wide dust storm, Mars 2’s descent module entered too steeply and crashed, becoming the first human artifact on the Martian surface.',
+ goal:'Soft-land a capsule and deploy a tiny ski-walking PrOP-M rover.',
+ why:'Parachute failed to deploy properly during steep atmospheric entry.',
+ found:'Its companion orbiter mapped Martian topography and atmospheric temperatures for eight months.',
+ fun:'Carried metal pennants stamped with the Soviet emblem.',
+ left:['Mars 2 lander & PrOP-M rover (≈1,210 kg)'],nssdc:'1971-045A'},
+
+{id:'mars3',w:'mars',name:'Mars 3 Lander',who:'Soviet Union',date:'1971-12-02',dt:'2 Dec 1971',kind:'lander',status:'silent',lat:-45,lon:-158,loc:'Sirenum Terra (estimated)',
+ stat:'First soft landing on Mars; silent after 110 seconds',
+ story:'Achieved humanity’s first survivable touchdown on Mars in the midst of a colossal global dust storm, transmitting 20 seconds of a partial horizon image before falling silent.',
+ goal:'Soft-land on Mars and transmit surface panoramas.',
+ why:'Likely disabled by coronal electrical discharge or dust storm damage to its antenna.',
+ found:'Proved heat shields and parachutes could survive entry into Mars’s thin atmosphere.',
+ fun:'Potential candidate hardware has been spotted in HiRISE orbital imagery of Sirenum Terra.',
+ left:['Mars 3 lander (≈1,210 kg)'],nssdc:'1971-049A'},
+
+{id:'mars6',w:'mars',name:'Mars 6 Lander',who:'Soviet Union',date:'1974-03-12',dt:'12 Mar 1974',kind:'crash',status:'crashed',lat:-23.9,lon:-19.42,loc:'Margaritifer Terra (estimated)',
+ stat:'Lost contact seconds before touchdown',
+ story:'Transmitted 224 seconds of direct atmospheric measurements during parachute descent before losing contact just as its landing rockets were scheduled to fire.',
+ goal:'Measure atmospheric pressure and composition during descent and land.',
+ why:'Crashed at terminal parachute velocity (~61 m/s).',
+ found:'Provided the first direct in-situ measurements of Mars’s upper and lower atmosphere.',
+ fun:'Telemetry stopped at the exact instant retro-rockets ignited.',
+ left:['Mars 6 descent module (≈635 kg)'],nssdc:'1973-052A'},
+
+{id:'viking1',w:'mars',name:'Viking 1 Lander',who:'United States (NASA)',date:'1976-07-20',dt:'20 Jul 1976',kind:'lander',status:'silent',lat:22.697,lon:-48.222,loc:'Chryse Planitia (Plain of Gold)',
+ stat:'Operated 2,245 sols (6+ years); silent Nov 1982',
+ story:'NASA’s first successful Mars lander touched down on the 7th anniversary of Apollo 11, sending the first clear color photographs of the rusty Martian plains.',
+ goal:'Search for microbial biosignatures in soil and monitor Martian weather.',
+ why:'Stationary nuclear-powered lander; an accidental command update severed antenna pointing in 1982.',
+ found:'Showed Mars’s sky is salmon-pink due to suspended iron-oxide dust and detected reactive soil chemistry.',
+ fun:'Officially named the Thomas Mutch Memorial Station.',
+ left:['Viking 1 lander (≈657 kg)','Aeroshell & parachute nearby'],nssdc:'1975-075C'},
+
+{id:'viking2',w:'mars',name:'Viking 2 Lander',who:'United States (NASA)',date:'1976-09-03',dt:'3 Sep 1976',kind:'lander',status:'silent',lat:48.269,lon:134.01,loc:'Utopia Planitia',
+ stat:'Operated 1,281 sols; silent Apr 1980',
+ story:'Touched down 6,400 km from Viking 1 on the boulder-strewn northern plains of Utopia Planitia, capturing iconic images of thin water-ice frost coating rocks in winter.',
+ goal:'Sample northern mid-latitude soil and record seismic and weather data.',
+ why:'Batteries eventually failed in April 1980 after nearly four Earth years.',
+ found:'Observed seasonal winter frost forming and sublimating on the Martian surface.',
+ fun:'Renamed the Gerald Soffen Memorial Station.',
+ left:['Viking 2 lander (≈657 kg)','Ejected collector shroud'],nssdc:'1975-083C'},
+
+{id:'pathfinder',w:'mars',name:'Mars Pathfinder & Sojourner',who:'United States (NASA)',date:'1997-07-04',dt:'4 Jul 1997',kind:'rover',status:'silent',lat:19.33,lon:-33.55,loc:'Ares Vallis (ancient outflow channel)',
+ stat:'Operated 83 sols; first wheeled rover on Mars',
+ story:'Cushioned by giant bouncing airbags, Pathfinder opened its petals to release Sojourner—a 11.5 kg six-wheeled rover that rolled onto Mars on 6 July 1997.',
+ goal:'Demonstrate low-cost airbag landing and mobile rover geology.',
+ why:'Cold Martian temperatures depleted its non-rechargeable battery after nearly three months (12× its 7-sol design life).',
+ found:'Analyzed rounded pebbles and stacked rocks deposited by catastrophic ancient floods.',
+ fun:'Pathfinder’s base station was renamed the Carl Sagan Memorial Station.',
+ left:['Carl Sagan Memorial Station (≈360 kg)','Sojourner rover (≈11.5 kg)','Deflated airbags'],nssdc:'1996-068A'},
+
+{id:'mpl',w:'mars',name:'Mars Polar Lander',who:'United States (NASA)',date:'1999-12-03',dt:'3 Dec 1999',kind:'crash',status:'crashed',lat:-76,lon:165,loc:'Ultimi Scopuli near south pole (estimated)',
+ stat:'Lost during atmospheric entry/descent',
+ story:'Entered the Martian atmosphere near the south polar layered deposits along with two Deep Space 2 microprobes, but never established radio contact after touchdown.',
+ goal:'Dig into south polar layered terrain to study water ice and climate cycles.',
+ why:'Investigation concluded a spurious sensor signal shut off descent engines ~40 metres above the ground.',
+ found:'Led NASA to overhaul end-to-end entry, descent, and landing testing.',
+ fun:'Carried a Planetary Society microphone intended to record Martian wind.',
+ left:['Lander wreckage (≈500 kg)','Two Deep Space 2 penetrator probes'],nssdc:null},
+
+{id:'beagle2',w:'mars',name:'Beagle 2',who:'United Kingdom (ESA Mars Express)',date:'2003-12-25',dt:'25 Dec 2003',kind:'lander',status:'silent',lat:11.5265,lon:90.4295,loc:'Isidis Planitia',
+ stat:'Found intact in 2015; solar petals partially blocked antenna',
+ story:'Separated from ESA’s Mars Express on Christmas Day 2003 and vanished. Eleven years later, NASA’s HiRISE camera spotted Beagle 2 intact on Isidis Planitia.',
+ goal:'Search for organic molecules and isotopic signs of past life.',
+ why:'Only two or three of its four petal-like solar arrays unfolded, blocking its radio antenna underneath.',
+ found:'Proved the tiny 33 kg British lander actually survived entry and landed softly.',
+ fun:'Carried a calibration spot painting created by artist Damien Hirst.',
+ left:['Beagle 2 lander (≈33 kg)','Parachute & backshell nearby'],nssdc:null},
+
+{id:'spirit',w:'mars',name:'Spirit (MER-A)',who:'United States (NASA)',date:'2004-01-04',dt:'4 Jan 2004',kind:'rover',status:'silent',lat:-14.5718,lon:175.4785,loc:'Gusev crater',
+ stat:'Operated 2,210 sols (6+ years); drove 7.73 km',
+ story:'Built for a 90-sol mission, Spirit climbed Husband Hill and explored Columbia Hills for over six years before a wheel broke through crust into soft sulfate sand at “Troy”.',
+ goal:'Search Gusev crater for geological evidence of ancient liquid water.',
+ why:'Trapped at an unfavorable tilt during Martian winter, its solar arrays could not generate enough heat to survive.',
+ found:'Uncovered nearly pure opaline silica—evidence of ancient hot springs or volcanic steam vents.',
+ fun:'Captured the first photograph of Earth seen from the surface of another planet.',
+ left:['Spirit rover (≈185 kg)','Airbag lander & heat shield'],nssdc:null},
+
+{id:'opportunity',w:'mars',name:'Opportunity (MER-B)',who:'United States (NASA)',date:'2004-01-25',dt:'25 Jan 2004',kind:'rover',status:'silent',lat:-1.9462,lon:-5.5266,loc:'Meridiani Planum (Perseverance Valley)',
+ stat:'Operated 5,111 sols (14+ years); drove 45.16 km',
+ story:'Rolled straight into Eagle crater on landing and went on to traverse 45.16 km across Meridiani Planum, operating 55 times longer than its planned 90 sols until a planet-encircling dust storm blotted out the Sun in June 2018.',
+ goal:'Characterize hematite-bearing rocks and past water environments.',
+ why:'Global dust storm starved its solar arrays of sunlight in June 2018.',
+ found:'Discovered hematite spherules (“blueberries”) and sedimentary cross-bedding formed in ancient acidic lakes.',
+ fun:'Even visited and inspected its own discarded heat shield on the plains.',
+ left:['Opportunity rover (≈185 kg)','Lander platform & heat shield'],nssdc:null},
+
+{id:'phoenix',w:'mars',name:'Phoenix',who:'United States (NASA)',date:'2008-05-25',dt:'25 May 2008',kind:'lander',status:'silent',lat:68.22,lon:-125.7,loc:'Green Valley, Vastitas Borealis (68.22°N)',
+ stat:'Operated 155 sols; confirmed shallow water ice',
+ story:'Used a 2.35-metre robotic arm to trench into the Martian arctic plains, uncovering bright white water ice just centimetres below the soil.',
+ goal:'Sample subsurface arctic water ice and analyze soil chemistry.',
+ why:'Solar-powered lander succumbed to darkness and carbon-dioxide dry-ice buildup in northern winter.',
+ found:'Confirmed pure water ice beneath the regolith, detected perchlorates, and observed snow falling from high clouds.',
+ fun:'Diced-sized chunks of bright ice photographed in its trench sublimated away over four sols, proving they were water ice.',
+ left:['Phoenix lander (≈350 kg)','Heat shield & backshell'],nssdc:null},
+
+{id:'curiosity',w:'mars',name:'Curiosity (MSL)',who:'United States (NASA)',date:'2012-08-06',dt:'6 Aug 2012',kind:'rover',status:'active',lat:-4.5895,lon:137.4417,loc:'Gale Crater (Mount Sharp)',
+ stat:'Active since 2012; climbing Mount Sharp (~37 km driven)',
+ story:'Lowered gently onto Gale Crater by a rocket-powered sky crane, the nuclear-powered Curiosity rover has spent over 14 years ascending the layered sedimentary foothills of Mount Sharp.',
+ goal:'Determine whether ancient Mars ever offered habitable environmental conditions.',
+ why:'Still actively exploring; its discarded sky-crane descent stage, heat shield, and supersonic parachute rest nearby.',
+ found:'Proved Gale Crater held freshwater lakes and rivers for millions of years and detected preserved organic carbon molecules.',
+ fun:'Holes punched into its aluminum wheels spell “J-P-L” in Morse code in the Martian dust.',
+ left:['Sky-crane stage (~600 m away)','Supersonic parachute & heat shield','Tungsten ballast weights'],nssdc:null},
+
+{id:'schiaparelli',w:'mars',name:'Schiaparelli EDM',who:'Europe & Russia (ExoMars)',date:'2016-10-19',dt:'19 Oct 2016',kind:'crash',status:'crashed',lat:-2.05,lon:-6.21,loc:'Meridiani Planum',
+ stat:'Crashed due to IMU saturation anomaly',
+ story:'A technology demonstrator for European Mars landing systems. During parachute descent, a brief sensor saturation caused its navigation computer to calculate a negative altitude, jettisoning the parachute 3.7 km too early.',
+ goal:'Validate European entry, descent, and landing sensors and weather station.',
+ why:'Impacted Meridiani Planum at ~540 km/h; its Trace Gas Orbiter carrier succeeded completely.',
+ found:'Identified critical software saturation guards needed for future ExoMars landings.',
+ fun:'Impacted less than 50 km from where NASA’s Opportunity rover was operating.',
+ left:['Schiaparelli lander debris (≈577 kg)','Parachute & heat shield'],nssdc:null},
+
+{id:'insight',w:'mars',name:'InSight',who:'United States (NASA)',date:'2018-11-26',dt:'26 Nov 2018',kind:'lander',status:'silent',lat:4.5024,lon:135.6234,loc:'Elysium Planitia',
+ stat:'Operated 1,440 sols; detected 1,319 marsquakes',
+ story:'Placed the ultra-sensitive SEIS seismometer directly onto the Martian ground, listening to the planet’s interior heartbeat for four years until dust coated its solar arrays.',
+ goal:'Measure Mars’s seismic activity, internal structure, and core size.',
+ why:'Thick dust accumulation on solar panels depleted power in December 2022.',
+ found:'Detected 1,319 marsquakes—including meteoroid impacts—and revealed Mars has a large liquid iron-alloy core.',
+ fun:'Its final image showed its dust-covered deck quietly fading into Martian twilight.',
+ left:['InSight lander (≈358 kg)','SEIS seismometer & dome on ground'],nssdc:null},
+
+{id:'perseverance',w:'mars',name:'Perseverance (Mars 2020)',who:'United States (NASA)',date:'2021-02-18',dt:'18 Feb 2021',kind:'rover',status:'active',lat:18.4457,lon:77.4508,loc:'Jezero crater (ancient river delta)',
+ stat:'Active; completed 42.2 km marathon on 14 Jun 2026',
+ story:'Exploring an ancient river delta in Jezero crater, Perseverance drills and seals rock cores into ultra-clean titanium tubes for future Mars Sample Return—and passed a full marathon distance on 14 June 2026.',
+ goal:'Seek signs of ancient microbial life and cache rock core samples.',
+ why:'Still actively roving; left a backup depot of 10 sealed sample tubes at Three Forks in Jezero crater.',
+ found:'Discovered igneous and mudstone rocks altered by water, plus organic-bearing minerals; MOXIE produced breathable oxygen from CO₂.',
+ fun:'Carried the Ingenuity helicopter tucked beneath its belly.',
+ left:['10 sealed sample tubes at Three Forks','Sky-crane, parachute & heat shield','Discarded drill bits'],nssdc:null},
+
+{id:'ingenuity',w:'mars',name:'Ingenuity Helicopter',who:'United States (NASA)',date:'2021-04-19',dt:'19 Apr 2021',kind:'copter',status:'silent',lat:18.5,lon:77.55,loc:'Valinor Hills, Jezero crater',
+ stat:'72 flights completed; retired Jan 2024 after blade damage',
+ story:'Achieved the first powered, controlled aerodynamic flight on another planet—a “Wright brothers moment” in air just 1% as dense as Earth’s. Designed for 5 flights, it completed 72 over nearly three years.',
+ goal:'Demonstrate powered rotorcraft flight in the thin Martian atmosphere.',
+ why:'Sustained rotor-blade tip damage during landing on Flight 72 (18 Jan 2024); remains upright as a stationary weather station.',
+ found:'Proved aerial scouting is viable on Mars, flying over 17 km total across 72 sorties.',
+ fun:'Carried a postage-stamp-sized swatch of muslin fabric from the 1903 Wright Flyer.',
+ left:['Ingenuity helicopter (≈1.8 kg)','Broken carbon-fiber rotor blade tip'],nssdc:null},
+
+{id:'zhurong',w:'mars',name:'Tianwen-1 Lander & Zhurong',who:'China (CNSA)',date:'2021-05-14',dt:'14 May 2021',kind:'rover',status:'silent',lat:25.1,lon:109.9,loc:'Southern Utopia Planitia',
+ stat:'Operated 361 sols; drove 1.92 km; inactive since 2022',
+ story:'Made China the second nation to successfully operate a rover on Mars, using subsurface radar to probe beneath southern Utopia Planitia.',
+ goal:'Survey Martian topography, subsurface water-ice layers, and mineralogy.',
+ why:'Entered hibernation in May 2022 for northern winter and did not awaken due to dust buildup on its solar wings.',
+ found:'Subsurface radar identified polygonal wedges and layered deposits indicative of past climate shifts.',
+ fun:'NASA’s Mars Reconnaissance Orbiter imaged Zhurong resting stationary in February 2023.',
+ left:['Tianwen-1 landing platform (≈1,285 kg)','Zhurong rover (≈240 kg)'],nssdc:null}
+];
+
+const ERAS = [
+ {from:'1959-01-01',t:'1959–1968 · The First Touchdowns',d:'The Space Race begins. Early impactors strike the Moon before Luna 9 and Surveyor 1 prove soft landings are possible.'},
+ {from:'1969-07-01',t:'1969–1972 · Apollo: Humans on the Moon',d:'Twelve astronauts walk across six lunar sites, leaving behind descent stages, electric rovers, flags, and active laser reflectors.'},
+ {from:'1973-01-01',t:'1973–1996 · Robotic Pioneers & Viking on Mars',d:'Lunokhod 2 sets a 41-year driving record while Viking 1 and 2 send the first color panoramas from the Martian plains.'},
+ {from:'1997-01-01',t:'1997–2012 · Wheels Across the Red Planet',d:'Sojourner, Spirit, Opportunity, and Curiosity turn Mars into a world of long-distance robotic geology.'},
+ {from:'2013-01-01',t:'2013–2022 · Far-Side Landings & Aerial Flight',d:'China lands on the lunar far side and Mars, InSight listens to marsquakes, and Ingenuity takes flight.'},
+ {from:'2023-01-01',t:'2023–Today · The Lunar South Pole & New Arrivals',d:'India reaches the lunar south pole, Japan lands with pinpoint precision, commercial landers arrive, and Perseverance runs a Mars marathon.'}
+];
+
+const FUN = [
+ {t:'Six flags & a Goodwill disc',w:'Moon',b:'Apollo 11–17',d:'All six crewed Apollo missions planted flags. Apollo 11 also left a silicon disc etched with messages from 73 world leaders.'},
+ {t:'Fallen Astronaut sculpture',w:'Moon',b:'Apollo 15',d:'An 8.5 cm aluminum figurine placed beside a plaque honoring 14 astronauts and cosmonauts who gave their lives for spaceflight.'},
+ {t:'Two golf balls',w:'Moon',b:'Apollo 14',d:'Alan Shepard smuggled a 6-iron club head and hit two golf balls across Fra Mauro—claiming the second went “miles and miles.”'},
+ {t:'Hammer & falcon feather',w:'Moon',b:'Apollo 15',d:'Commander David Scott dropped both together on live TV; without air drag, they hit the lunar dust at the exact same instant.'},
+ {t:'Duke family portrait',w:'Moon',b:'Apollo 16',d:'Charles Duke left a laminated photo of his wife and two sons on the Descartes Highlands with a note signed on the back.'},
+ {t:'96 jettison bags',w:'Moon',b:'Apollo 11–17',d:'To bring back 382 kg of Moon rocks, crews left behind life-support backpacks, cameras, boots, and ~96 waste containers.'},
+ {t:'Wright Flyer wing fabric',w:'Mars',b:'Ingenuity',d:'Tucked beneath Ingenuity’s solar panel is a stamp-sized piece of muslin from the 1903 Wright Flyer.'},
+ {t:'Damien Hirst spot painting',w:'Mars',b:'Beagle 2',d:'The British lander carried a miniature multi-colored spot painting used to calibrate its cameras and spectrometers.'},
+ {t:'Three Forks sample depot',w:'Mars',b:'Perseverance',d:'Ten titanium tubes filled with drilled Martian rock cores rest neatly spaced on the Jezero floor as a backup cache.'},
+ {t:'Soviet coat-of-arms pennants',w:'Moon & Mars',b:'Luna 2, Mars 2 & 3',d:'Early Soviet probes carried interlocking pentagonal stainless-steel shields designed to scatter on impact.'}
+];
+
+const RACE = [
+ {n:'Opportunity (Mars)',km:45.16,w:'mars',note:'2004–2018 · 5,111 sols'},
+ {n:'Perseverance (Mars)',km:42.20,w:'mars',note:'2021–2026 · Marathon reached 14 Jun 2026 (sol 1,890)'},
+ {n:'Lunokhod 2 (Moon)',km:39.00,w:'moon',note:'1973 · Held off-Earth record for 41 years'},
+ {n:'Curiosity (Mars)',km:37.00,w:'mars',note:'2012–2026 · Ascending Mount Sharp'},
+ {n:'Apollo 17 LRV (Moon)',km:35.90,w:'moon',note:'1972 · Driven by Cernan & Schmitt'},
+ {n:'Apollo 15 LRV (Moon)',km:27.80,w:'moon',note:'1971 · First electric car on the Moon'},
+ {n:'Apollo 16 LRV (Moon)',km:26.70,w:'moon',note:'1972 · Descartes Highlands'},
+ {n:'Lunokhod 1 (Moon)',km:10.54,w:'moon',note:'1970–1971 · First remote rover on another world'},
+ {n:'Spirit (Mars)',km:7.73,w:'mars',note:'2004–2010 · Columbia Hills'},
+ {n:'Zhurong (Mars)',km:1.92,w:'mars',note:'2021–2022 · Utopia Planitia'},
+ {n:'Pragyan (Moon)',km:0.10,w:'moon',note:'2023 · ~101 m near lunar south pole'},
+ {n:'Sojourner (Mars)',km:0.10,w:'mars',note:'1997 · ~100 m around Carl Sagan Station'}
+];
+
+const QUIZ = [
+ {q:'Which spacecraft was the first human-made object to reach the Moon?',o:['Luna 2','Apollo 11','Surveyor 1','Chandrayaan-3'],a:0,e:'Luna 2 (Soviet Union) impacted the Moon on 13 September 1959.'},
+ {q:'Which mission achieved the very first soft landing on the Moon?',o:['Ranger 4','Luna 9','Apollo 8','Chang’e 3'],a:1,e:'Luna 9 touched down softly on 3 February 1966 and transmitted the first surface photos.'},
+ {q:'Why did Apollo astronauts leave the bottom half of their Lunar Module on the Moon?',o:['They forgot to unbolt it','It was left as a museum piece','To shed mass so the lighter ascent stage had enough fuel to reach orbit','To hold down the flag'],a:2,e:'Every kilogram lifted back into orbit requires exponentially more propellant. The descent stage also served as a launch pad.'},
+ {q:'Which three Apollo missions carried a Lunar Roving Vehicle (Moon buggy)?',o:['Apollo 11, 12, 14','Apollo 13, 14, 15','Apollo 15, 16, 17','Apollo 12, 13, 14'],a:2,e:'Apollo 15, 16, and 17 each carried—and left behind—an electric Lunar Roving Vehicle.'},
+ {q:'What sporting items did Alan Shepard hit on the Moon during Apollo 14?',o:['Two tennis balls','Two golf balls','A baseball','A hockey puck'],a:1,e:'Shepard hit two golf balls in Fra Mauro using a makeshift 6-iron club head.'},
+ {q:'Which spacecraft made the first soft landing on the far side of the Moon?',o:['Chang’e 4','Luna 24','SLIM','Surveyor 3'],a:0,e:'China’s Chang’e 4 landed in Von Kármán crater on 3 January 2019 using a relay satellite.'},
+ {q:'What is the purpose of the retroreflectors left by Apollo 11, 14, and 15?',o:['To generate solar electricity','To bounce laser pulses from Earth to measure the Moon’s distance to millimetre precision','To transmit radio music','To melt lunar ice'],a:1,e:'Observatories on Earth still fire lasers at these corner-cube mirrors to track the Moon’s orbit.'},
+ {q:'How long was Britain’s Beagle 2 lost on Mars before orbital cameras spotted it intact?',o:['1 year','11 years','40 years','It was never found'],a:1,e:'Lost on Christmas Day 2003, Beagle 2 was photographed intact on Isidis Planitia in January 2015.'},
+ {q:'How many flights did NASA’s Ingenuity helicopter complete on Mars before retiring?',o:['5 flights','19 flights','72 flights','140 flights'],a:2,e:'Designed as a 5-flight technology demo, Ingenuity flew 72 times between 2021 and January 2024.'},
+ {q:'Which rover completed a full 42.2 km marathon distance on Mars in June 2026?',o:['Spirit','Perseverance','Sojourner','Zhurong'],a:1,e:'Perseverance passed 42.195 km on 14 June 2026 (sol 1,890) in Jezero crater.'},
+ {q:'Where did India’s Chandrayaan-3 touch down in August 2023?',o:['Near the lunar equator','Near the lunar south pole (69.37°S)','In Mare Tranquillitatis','On the lunar far side'],a:1,e:'Chandrayaan-3 became the first mission to soft-land in the high southern lunar highlands.'},
+ {q:'Which Mars spacecraft made the first survivable soft landing on the Red Planet in 1971?',o:['Mars 3','Viking 1','Phoenix','Curiosity'],a:0,e:'The Soviet Mars 3 lander touched down softly on 2 December 1971, transmitting for 110 seconds.'}
+];
+
+const GLOSSARY = [
+ ['Lander','A stationary spacecraft engineered to touch down softly and operate from a fixed location.'],
+ ['Rover','A wheeled robotic vehicle capable of driving across planetary terrain to study multiple sites.'],
+ ['Impactor','A probe designed to strike a celestial body at high velocity rather than braking to land.'],
+ ['Descent Stage','The lower section of a two-stage lander carrying landing legs and braking propellant; left behind at liftoff.'],
+ ['Ascent Stage','The pressurized upper cabin that lifts astronauts off the lunar surface back to lunar orbit.'],
+ ['Rocket Equation','Tsiolkovsky’s law showing propellant mass grows exponentially with required velocity change (Δv).'],
+ ['Retroreflector','An array of corner-cube prisms that reflects laser beams directly back toward their source on Earth.'],
+ ['ALSEP','Apollo Lunar Surface Experiments Package—nuclear-powered science stations left by Apollo 12–17.'],
+ ['Sample Return','A mission architecture that launches sealed rock or soil capsules back to Earth laboratories.'],
+ ['Sol','One solar day on Mars, lasting 24 hours, 39 minutes, and 35 seconds.'],
+ ['Far Side','The hemisphere of the Moon permanently turned away from Earth due to tidal locking.'],
+ ['EDL Debris','Entry, Descent, and Landing hardware—heat shields, backshells, and parachutes—jettisoned before touchdown.']
+];
+
+(() => {
+  const $ = (s, r = document) => r.querySelector(s);
+  const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+  const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let C = {};
+  const readC = () => {
+    const s = getComputedStyle(document.documentElement);
+    const g = k => s.getPropertyValue(k).trim();
+    C = { ink: g('--ink'), bg: g('--bg'), mut: g('--mut'), star: g('--star'), line: g('--line'), hi: g('--hi'), acc: g('--acc') };
+  };
+  readC();
+
+  const updateThemeBtn = () => {
+    const isLight = document.documentElement.dataset.theme === 'light';
+    $('#th').textContent = isLight ? '🌙 Dark' : '☀️ Light';
+  };
+  updateThemeBtn();
+
+  $('#th').onclick = () => {
+    const r = document.documentElement;
+    const n = r.dataset.theme === 'light' ? 'dark' : 'light';
+    r.dataset.theme = n;
+    try { localStorage.setItem('th', n); } catch (e) {}
+    readC();
+    updateThemeBtn();
+  };
+
+  /* Minimal Collapsible Section Index Drawer */
+  const menuBtn = $('#menuBtn'), idx = $('#idx');
+  menuBtn.onclick = e => {
+    e.stopPropagation();
+    const open = idx.classList.toggle('open');
+    menuBtn.setAttribute('aria-expanded', open);
+  };
+  $$('#idx a').forEach(a => a.onclick = () => {
+    idx.classList.remove('open');
+    menuBtn.setAttribute('aria-expanded', 'false');
+  });
+  document.addEventListener('click', e => {
+    if (!idx.contains(e.target) && e.target !== menuBtn) {
+      idx.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  const COL = { crewed: '#ffb347', lander: '#5cb0ff', rover: '#5eead4', copter: '#c4a1ff', crash: '#ff6b6b' };
+  const KN = { crewed: 'Crewed', lander: 'Lander', rover: 'Rover', copter: 'Helicopter', crash: 'Crash site' };
+  const WK = {
+    luna2: 'Luna 2', ranger4: 'Ranger 4', luna9: 'Luna 9', surveyor1: 'Surveyor 1', luna13: 'Luna 13',
+    surveyor3: 'Surveyor 3', surveyor5: 'Surveyor 5', surveyor6: 'Surveyor 6', surveyor7: 'Surveyor 7',
+    apollo11: 'Apollo 11', apollo12: 'Apollo 12', luna16: 'Luna 16', lunokhod1: 'Lunokhod 1',
+    apollo14: 'Apollo 14', apollo15: 'Apollo 15', apollo16: 'Apollo 16', apollo17: 'Apollo 17',
+    lunokhod2: 'Lunokhod 2', luna24: 'Luna 24', saturn: 'Saturn V', change3: "Chang'e 3",
+    change4: "Chang'e 4", chandrayaan2: 'Chandrayaan-2', change5: "Chang'e 5", hakuto1: 'Hakuto-R Mission 1',
+    luna25: 'Luna 25', chandrayaan3: 'Chandrayaan-3', slim: 'Smart Lander for Investigating Moon',
+    im1: 'IM-1', change6: "Chang'e 6", blueghost: 'Blue Ghost Mission 1', im2: 'IM-2',
+    hakuto2: 'Hakuto-R Mission 2', falcon9: 'Falcon 9', mars2: 'Mars 2', mars3: 'Mars 3',
+    mars6: 'Mars 6', viking1: 'Viking 1', viking2: 'Viking 2', pathfinder: 'Mars Pathfinder',
+    mpl: 'Mars Polar Lander', beagle2: 'Beagle 2', spirit: 'Spirit (rover)', opportunity: 'Opportunity (rover)',
+    phoenix: 'Phoenix (spacecraft)', curiosity: 'Curiosity (rover)', schiaparelli: 'Schiaparelli EDM',
+    insight: 'InSight', perseverance: 'Perseverance (rover)', ingenuity: 'Ingenuity (helicopter)', zhurong: 'Tianwen-1'
+  };
+  const wk = m => WK[m.id] || m.name.replace(/\s*\(.*$/, '');
+  const IMG = {};
+  function wiki(m) {
+    return IMG[m.id] || (IMG[m.id] = fetch('https://en.wikipedia.org/api/rest_v1/page/summary/' + encodeURIComponent(wk(m).replace(/ /g, '_')))
+      .then(r => r.ok ? r.json() : null)
+      .catch(() => null));
+  }
+  function paint(m, img, big) {
+    wiki(m).then(j => {
+      const s = j && (big ? j.originalimage : j.thumbnail);
+      if (!s) return;
+      img.onload = () => img.classList.add('ok');
+      img.src = big ? (j.thumbnail && j.thumbnail.source.replace(/\/\d+px-/, '/960px-') || s.source) : s.source;
+      img.alt = m.name;
+    });
+  }
+  const wlink = m => 'https://en.wikipedia.org/wiki/' + encodeURIComponent(wk(m).replace(/ /g, '_'));
+
+  /* Scroll Reveal & Active Section Highlighting */
+  const io = new IntersectionObserver(e => e.forEach(x => {
+    if (x.isIntersecting) {
+      x.target.classList.add('in');
+      io.unobserve(x.target);
+    }
+  }), { threshold: 0.1 });
+  const rv = () => $$('.rv:not(.in)').forEach(e => io.observe(e));
+
+  const secs = $$('section');
+  const idxLinks = $$('#idx a');
+  const navIo = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        idxLinks.forEach(a => a.classList.toggle('on', a.getAttribute('href') === id));
+      }
+    });
+  }, { rootMargin: '-35% 0px -55% 0px' });
+  secs.forEach(s => navIo.observe(s));
+
+  /* Overview Counters */
+  const nMoon = MISSIONS.filter(m => m.w === 'moon').length;
+  const nMars = MISSIONS.length - nMoon;
+  const nCrash = MISSIONS.filter(m => m.kind === 'crash').length;
+  $('#stats').innerHTML = [
+    [MISSIONS.length, 'historic landing sites'],
+    [nMoon, 'sites on the Moon'],
+    [nMars, 'sites on Mars'],
+    [12, 'humans walked on Moon'],
+    [382, 'kg Apollo rocks returned'],
+    [nCrash, 'impact & crash sites']
+  ].map(s => `<div class="glass rv"><b data-n="${s[0]}">0</b><span>${s[1]}</span></div>`).join('');
+
+  $$('#stats b').forEach(b => {
+    const o = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      o.disconnect();
+      const n = +b.dataset.n;
+      const t0 = performance.now();
+      (function f(t) {
+        const k = reduce ? 1 : Math.min(1, (t - t0) / 1100);
+        b.textContent = Math.round(n * (1 - (1 - k) ** 3));
+        if (k < 1) requestAnimationFrame(f);
+      })(t0);
+    }), { threshold: 0.25 });
+    o.observe(b);
+  });
+
+  /* Starfield Background in Overview */
+  (() => {
+    const c = $('#stars'), x = c.getContext('2d');
+    let W, H, S;
+    const fit = () => {
+      W = c.width = c.offsetWidth;
+      H = c.height = c.offsetHeight;
+      S = Array.from({ length: Math.min(160, (W * H / 5200) | 0) }, () => [Math.random() * W, Math.random() * H, Math.random() * 1.4 + 0.3, Math.random() * 6]);
+    };
+    fit();
+    addEventListener('resize', fit);
+    (function d(t) {
+      x.clearRect(0, 0, W, H);
+      S.forEach(s => {
+        x.globalAlpha = 0.25 + 0.65 * Math.abs(Math.sin(t / 1300 + s[3]));
+        x.fillStyle = C.star;
+        x.beginPath();
+        x.arc(s[0], s[1], s[2], 0, 7);
+        x.fill();
+      });
+      if (!reduce) requestAnimationFrame(d);
+    })(0);
+  })();
+
+  /* ---------- 3D INTERACTIVE GLOBE ATLAS (SCROLL-SAFE SPLIT/STACKED) ---------- */
+  const cv = $('#cv'), g = cv.getContext('2d'), tip = $('#tip'), toast = $('#scrollToast');
+  let W, H, dpr, toastTimer = null;
+  const st = { w: 'moon', f: 'all', q: '', sel: null, hov: null, lon: 20, lat: 10, R: 0, z: 1, tLon: null, tLat: null, vx: 0 };
+  const BASE = {
+    moon: ['#dce1ec', '#777d8f', '#141720'],
+    mars: ['#eda172', '#a84b29', '#1f0c07']
+  };
+  const CR = {};
+  ['moon', 'mars'].forEach(w => {
+    let s = w === 'moon' ? 7 : 11;
+    const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+    CR[w] = Array.from({ length: 150 }, () => ({
+      a: Math.asin(2 * r() - 1) * 180 / Math.PI,
+      o: r() * 360 - 180,
+      r: (0.012 + r() * r() * 0.095)
+    }));
+  });
+
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2);
+    W = cv.clientWidth;
+    H = cv.clientHeight;
+    cv.width = W * dpr;
+    cv.height = H * dpr;
+    g.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  addEventListener('resize', size);
+
+  const D = Math.PI / 180;
+  function proj(lat, lon, R, cx, cy) {
+    const a = lat * D, o = (lon - st.lon) * D, p = st.lat * D, ca = Math.cos(a);
+    const x = ca * Math.sin(o);
+    const y = Math.cos(p) * Math.sin(a) - Math.sin(p) * ca * Math.cos(o);
+    const z = Math.sin(p) * Math.sin(a) + Math.cos(p) * ca * Math.cos(o);
+    return { x: cx + R * x, y: cy - R * y, z };
+  }
+
+  const vis = () => MISSIONS.filter(m =>
+    m.w === st.w &&
+    (st.f === 'all' || m.kind === st.f || (st.f === 'live' && (m.status === 'active' || m.live))) &&
+    (!st.q || (m.name + m.who + m.loc + m.kind + m.story).toLowerCase().includes(st.q))
+  );
+
+  let hit = [], R = 0, drag = false;
+  function draw(t) {
+    const cx = W / 2;
+    const cy = H / 2;
+    const R0 = Math.min(W, H) * 0.38;
+    R = R0 * st.z;
+
+    if (st.tLon != null) {
+      let d = ((st.tLon - st.lon + 540) % 360) - 180;
+      st.lon += d * 0.095;
+      st.lat += (((st.tLat - st.lat + 540) % 360) - 180) * 0.095;
+      if (Math.abs(d) < 0.05) st.tLon = null;
+    } else if (!drag && !reduce) {
+      st.lon += st.vx;
+      st.vx *= 0.95;
+      if (!st.sel && !st.hov && Math.abs(st.vx) < 0.022) st.vx = 0.022;
+    }
+
+    g.clearRect(0, 0, W, H);
+    const c = BASE[st.w];
+
+    const halo = g.createRadialGradient(cx, cy, R * 0.94, cx, cy, R * 1.24);
+    halo.addColorStop(0, st.w === 'moon' ? 'rgba(175,196,255,0.24)' : 'rgba(255,135,85,0.28)');
+    halo.addColorStop(1, 'transparent');
+    g.fillStyle = halo;
+    g.beginPath();
+    g.arc(cx, cy, R * 1.24, 0, 7);
+    g.fill();
+
+    const b = g.createRadialGradient(cx - R * 0.38, cy - R * 0.38, R * 0.08, cx, cy, R);
+    b.addColorStop(0, c[0]);
+    b.addColorStop(0.62, c[1]);
+    b.addColorStop(1, c[2]);
+    g.fillStyle = b;
+    g.beginPath();
+    g.arc(cx, cy, R, 0, 7);
+    g.fill();
+
+    g.save();
+    g.beginPath();
+    g.arc(cx, cy, R, 0, 7);
+    g.clip();
+
+    CR[st.w].forEach(k => {
+      const p = proj(k.a, k.o, R, cx, cy);
+      if (p.z < 0.05) return;
+      const r = k.r * R * p.z;
+      g.save();
+      g.translate(p.x, p.y);
+      g.rotate(Math.atan2(p.y - cy, p.x - cx));
+      g.scale(p.z, 1);
+      g.beginPath();
+      g.arc(0, 0, r, 0, 7);
+      g.fillStyle = 'rgba(0,0,0,0.15)';
+      g.fill();
+      g.lineWidth = 1;
+      g.strokeStyle = 'rgba(255,255,255,0.13)';
+      g.stroke();
+      g.restore();
+    });
+
+    g.strokeStyle = 'rgba(255,255,255,0.09)';
+    g.lineWidth = 1;
+    for (let la = -60; la <= 60; la += 30) {
+      g.beginPath();
+      let f = 1;
+      for (let lo = -180; lo <= 180; lo += 4) {
+        const p = proj(la, lo, R, cx, cy);
+        if (p.z > 0) { f ? g.moveTo(p.x, p.y) : g.lineTo(p.x, p.y); f = 0; } else f = 1;
+      }
+      g.stroke();
+    }
+    for (let lo = -180; lo < 180; lo += 30) {
+      g.beginPath();
+      let f = 1;
+      for (let la = -90; la <= 90; la += 4) {
+        const p = proj(la, lo, R, cx, cy);
+        if (p.z > 0) { f ? g.moveTo(p.x, p.y) : g.lineTo(p.x, p.y); f = 0; } else f = 1;
+      }
+      g.stroke();
+    }
+
+    const sh = g.createRadialGradient(cx - R * 0.48, cy - R * 0.48, R * 0.22, cx, cy, R * 1.05);
+    sh.addColorStop(0, 'transparent');
+    sh.addColorStop(1, 'rgba(0,0,12,0.68)');
+    g.fillStyle = sh;
+    g.fillRect(cx - R, cy - R, R * 2, R * 2);
+    g.restore();
+
+    hit = [];
+    vis().forEach(m => {
+      const coords = m.pts || [[m.lat, m.lon]];
+      coords.forEach(([la, lo], idx) => {
+        const p = proj(la, lo, R, cx, cy);
+        if (p.z <= 0.02) return;
+        const sel = st.sel === m || st.hov === m;
+        const r = (sel ? 9 : 6) * (0.72 + p.z * 0.48);
+        hit.push([p.x, p.y, m]);
+
+        if (sel || m.status === 'active') {
+          const k = (t / 950) % 1;
+          g.beginPath();
+          g.arc(p.x, p.y, r + k * 20, 0, 7);
+          g.strokeStyle = `rgba(255,255,255,${0.72 * (1 - k)})`;
+          g.lineWidth = 2;
+          g.stroke();
+        }
+
+        g.beginPath();
+        g.arc(p.x, p.y, r, 0, 7);
+        g.fillStyle = COL[m.kind] || '#fff';
+        g.shadowColor = COL[m.kind];
+        g.shadowBlur = sel ? 22 : 10;
+        g.fill();
+        g.shadowBlur = 0;
+        g.lineWidth = sel ? 2.8 : 1.5;
+        g.strokeStyle = '#ffffff';
+        g.stroke();
+
+        if (idx === 0 && (sel || st.z > 1.45)) {
+          g.font = '700 12px Manrope, sans-serif';
+          g.fillStyle = C.ink;
+          g.strokeStyle = C.bg;
+          g.lineWidth = 3.5;
+          g.strokeText(m.name, p.x + r + 7, p.y + 4);
+          g.fillText(m.name, p.x + r + 7, p.y + 4);
+        }
+      });
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  let px = 0, py = 0, pts = new Map(), pd = 0, moved = 0;
+  cv.addEventListener('pointerdown', e => {
+    cv.setPointerCapture(e.pointerId);
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    drag = true;
+    px = e.clientX;
+    py = e.clientY;
+    moved = 0;
+    st.vx = 0;
+    st.tLon = null;
+    pd = 0;
+  });
+
+  cv.addEventListener('pointermove', e => {
+    const rect = cv.getBoundingClientRect();
+    const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+
+    if (!pts.has(e.pointerId)) {
+      let best = null, bd = 22;
+      hit.forEach(h => {
+        const d = Math.hypot(h[0] - mx, h[1] - my);
+        if (d < bd) { bd = d; best = h[2]; }
+      });
+      st.hov = best;
+      if (best) {
+        cv.style.cursor = 'pointer';
+        tip.innerHTML = `<b>${esc(best.name)}</b> · <span style="color:var(--mut)">${esc(best.dt)}</span>`;
+        tip.style.left = mx + 'px';
+        tip.style.top = my + 'px';
+        tip.classList.add('on');
+      } else {
+        cv.style.cursor = 'grab';
+        tip.classList.remove('on');
+      }
+      return;
+    }
+
+    pts.set(e.pointerId, [e.clientX, e.clientY]);
+    if (pts.size === 2) {
+      const [a, b] = [...pts.values()];
+      const d = Math.hypot(a[0] - b[0], a[1] - b[1]);
+      if (pd) st.z = Math.min(3.2, Math.max(0.65, st.z * d / pd));
+      pd = d;
+      return;
+    }
+
+    const dx = e.clientX - px, dy = e.clientY - py;
+    px = e.clientX;
+    py = e.clientY;
+    moved += Math.abs(dx) + Math.abs(dy);
+    const k = 90 / (R || 260);
+    const inv = Math.cos(st.lat * D) < 0 ? -1 : 1;
+    st.lon -= dx * k * inv;
+    st.vx = -dx * k * 0.45 * inv;
+    st.lat = Math.max(-85, Math.min(85, st.lat + dy * k));
+  });
+
+  const up = e => {
+    pts.delete(e.pointerId);
+    if (!pts.size) drag = false;
+    pd = 0;
+  };
+  cv.addEventListener('pointerup', e => {
+    const was = moved < 6 && e.pointerType !== undefined;
+    up(e);
+    if (was) {
+      const r = cv.getBoundingClientRect();
+      const x = e.clientX - r.left, y = e.clientY - r.top;
+      let best = null, bd = 26;
+      hit.forEach(h => {
+        const d = Math.hypot(h[0] - x, h[1] - y);
+        if (d < bd) { bd = d; best = h[2]; }
+      });
+      if (best) pick(best);
+    }
+  });
+  cv.addEventListener('pointercancel', up);
+  cv.addEventListener('pointerleave', () => { st.hov = null; tip.classList.remove('on'); });
+
+  cv.addEventListener('wheel', e => {
+    if (e.ctrlKey || e.metaKey) {
+      e.preventDefault();
+      st.z = Math.min(3.2, Math.max(0.65, st.z * (e.deltaY < 0 ? 1.1 : 0.91)));
+    } else {
+      toast.classList.add('on');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('on'), 1400);
+    }
+  }, { passive: false });
+
+  $('#zi').onclick = () => st.z = Math.min(3.2, st.z * 1.25);
+  $('#zo').onclick = () => st.z = Math.max(0.65, st.z / 1.25);
+  $('#zr').onclick = () => { st.z = 1; st.tLon = st.w === 'moon' ? 20 : 60; st.tLat = 10; };
+
+  function fly(m) {
+    st.tLon = m.lon;
+    st.tLat = Math.max(-72, Math.min(72, m.lat * 0.85));
+    st.z = Math.max(st.z, 1.55);
+  }
+
+  function list() {
+    const v = vis().sort((a, b) => a.date < b.date ? -1 : 1);
+    $('#list').innerHTML = v.map(m => `
+      <button class="it ${st.sel === m ? 'on' : ''}" data-id="${m.id}">
+        <i class="dot" style="color:${COL[m.kind]};background:${COL[m.kind]}"></i>
+        <div><b>${esc(m.name)}</b><span>${esc(m.dt)} · ${esc(m.who)}</span></div>
+      </button>
+    `).join('') || '<p style="padding:20px;color:var(--mut)">No missions match your search.</p>';
+    $$('.it').forEach(b => b.onclick = () => pick(MISSIONS.find(m => m.id === b.dataset.id)));
+  }
+
+  function chips() {
+    const F = [['all', 'All'], ['live', 'Active / Reflectors'], ['crewed', 'Crewed'], ['lander', 'Landers'], ['rover', 'Rovers'], ['crash', 'Crashes']];
+    $('#chips').innerHTML = F.map(f => `<button class="chip ${st.f === f[0] ? 'on' : ''}" data-f="${f[0]}">${f[1]}</button>`).join('');
+    $$('#chips .chip').forEach(b => b.onclick = () => { st.f = b.dataset.f; chips(); list(); });
+  }
+
+  function pick(m) {
+    st.sel = m;
+    st.vx = 0;
+    fly(m);
+    const i = $('#di');
+    i.classList.remove('ok');
+    i.removeAttribute('src');
+    paint(m, i, true);
+
+    $('#db').innerHTML = `
+      <span class="tag" style="color:${COL[m.kind]}">${KN[m.kind] || m.kind}</span>
+      <span class="tag">${esc(m.dt)}</span>
+      <span class="tag">${esc(m.who)}</span>
+      <h3>${esc(m.name)}</h3>
+      <p style="color:var(--mut);margin:0 0 12px;font-size:0.88rem">${esc(m.loc)} · ${m.lat.toFixed(2)}°, ${m.lon.toFixed(2)}°</p>
+      <p style="font-size:0.94rem">${esc(m.story)}</p>
+      <h4>Mission Objective</h4><p style="margin:0;font-size:0.92rem">${esc(m.goal)}</p>
+      <h4>Why It Stayed</h4><p style="margin:0;font-size:0.92rem">${esc(m.why)}</p>
+      <h4>Key Discoveries</h4><p style="margin:0;font-size:0.92rem">${esc(m.found)}</p>
+      <h4>Hardware Left Behind</h4><ul>${(m.left || []).map(l => `<li>${esc(l)}</li>`).join('')}</ul>
+      <h4>Notable Detail</h4><p style="margin:0;font-size:0.92rem">${esc(m.fun)}</p>
+      <div class="src">
+        ${m.nssdc ? `<a target="_blank" rel="noopener" href="${NSSDC(m.nssdc)}">NASA NSSDC ↗</a>` : ''}
+        <a target="_blank" rel="noopener" href="https://images.nasa.gov/search?q=${encodeURIComponent(wk(m))}">NASA Images ↗</a>
+        <a target="_blank" rel="noopener" href="${wlink(m)}">Wikipedia ↗</a>
+      </div>
+      <div class="cr">Archival image fetched from Wikipedia (NASA / space agency credit on article page).</div>
+    `;
+    $('#det').classList.add('on');
+    $('#det').scrollTop = 0;
+    list();
+  }
+
+  function closeDet() {
+    $('#det').classList.remove('on');
+    st.sel = null;
+    list();
+  }
+  $('#bk').onclick = closeDet;
+  $('#q').oninput = e => { st.q = e.target.value.trim().toLowerCase(); list(); };
+
+  $$('.seg').forEach(b => b.onclick = () => {
+    $$('.seg').forEach(x => {
+      const on = x === b;
+      x.classList.toggle('on', on);
+      x.setAttribute('aria-selected', on);
+    });
+    st.w = b.dataset.w;
+    st.sel = null;
+    st.z = 1;
+    st.tLon = st.w === 'moon' ? 20 : 60;
+    st.tLat = 10;
+    $('#det').classList.remove('on');
+    list();
+  });
+
+  size();
+  chips();
+  list();
+  requestAnimationFrame(draw);
+
+  /* ---------- EXPERIMENT 2: INTERACTIVE 5-STEP APOLLO DETACHMENT & MASS SIMULATOR ---------- */
+  const STAGES = [
+    {
+      t: '1. Launch Pad (Full Stack)',
+      m: '2,900,000 kg',
+      d: 'All three Saturn V stages (S-IC, S-II, S-IVB), Command/Service Module (CSM), and Lunar Module (LM) stand 110.6 m tall on Pad 39A.',
+      s1: 0, s2: 0, s3: 0, lm: 0, cm: 0, flame: 1
+    },
+    {
+      t: '2. S-IC First Stage Drop',
+      m: '650,000 kg remaining',
+      d: 'At 67 km altitude, five F-1 engines cut off. Explosive bolts sever the S-IC first stage (2,250,000 kg of empty tanks & engines), which falls into the Atlantic Ocean.',
+      s1: 1, s2: 0, s3: 0, lm: 0, cm: 0, flame: 2
+    },
+    {
+      t: '3. S-IVB TLI & Separation',
+      m: '45,000 kg remaining',
+      d: 'After S-II separation and S-IVB Trans-Lunar Injection, the CSM docks with the Lunar Module and extracts it. The spent S-IVB (~14,000 kg) is steered to crash on the Moon.',
+      s1: 2, s2: 1, s3: 1, lm: 0, cm: 0, flame: 0
+    },
+    {
+      t: '4. Lunar Ascent Separation',
+      m: '4,700 kg ascending',
+      d: 'On the Moon, pyrotechnic bolts sever the Ascent Stage from the gold-foil Descent Stage (2,034 kg). The Descent Stage remains forever on the Moon as a launch pad.',
+      s1: 2, s2: 2, s3: 2, lm: 1, cm: 0, flame: 3
+    },
+    {
+      t: '5. Earth Re-Entry Capsule',
+      m: '5,500 kg returning (0.19%)',
+      d: 'After rendezvous in lunar orbit, the LM Ascent Stage and Service Module are jettisoned. Only the 5,500 kg Command Module splashes down on Earth—99.81% of launch mass was left behind!',
+      s1: 2, s2: 2, s3: 2, lm: 2, cm: 1, flame: 0
+    }
+  ];
+
+  let curStage = 0;
+  function renderStage(idx) {
+    curStage = idx;
+    const s = STAGES[idx];
+    $$('#stPills .sp').forEach((b, i) => b.classList.toggle('on', i === idx));
+    $('#stDesc').innerHTML = `<b style="color:var(--ink)">${s.t} (${s.m}):</b> ${s.d}`;
+
+    const svg = $('#stageSvg');
+    const s1y = s.s1 === 0 ? 156 : 206;
+    const s1op = s.s1 === 2 ? 0.15 : 1;
+    const s2y = s.s2 === 0 ? 114 : 154;
+    const s2op = s.s2 === 2 ? 0.15 : 1;
+    const s3y = s.s3 === 0 ? 82 : 112;
+    const s3op = s.s3 === 2 ? 0.15 : 1;
+
+    svg.innerHTML = `
+      <g font-family="Manrope,sans-serif" font-size="11" font-weight="700">
+        <!-- Mass Readout Badge -->
+        <rect x="14" y="12" width="198" height="38" rx="10" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.16)"/>
+        <text x="24" y="28" fill="#ffb86b" font-size="10">ACTIVE SPACECRAFT MASS</text>
+        <text x="24" y="43" fill="#ffffff" font-size="13">${s.m}</text>
+
+        <!-- S-IC First Stage -->
+        <g opacity="${s1op}" transform="translate(0, ${s1y - 156})">
+          <rect x="92" y="156" width="36" height="62" rx="2" fill="#e6eaf5"/>
+          <rect x="92" y="198" width="36" height="20" fill="#182038"/>
+          <polygon points="92,202 80,218 92,218" fill="#cfd5e6"/>
+          <polygon points="128,202 140,218 128,218" fill="#cfd5e6"/>
+          ${s.flame === 1 ? '<polygon points="94,218 126,218 110,244" fill="#ffb347"/>' : ''}
+          <text x="148" y="190" fill="${s.s1 === 1 ? '#ff6b6b' : '#9aa6c9'}">${s.s1 === 1 ? '✕ S-IC Dropped (Atlantic)' : 'S-IC Stage 1'}</text>
+        </g>
+
+        <!-- S-II Second Stage -->
+        <g opacity="${s2op}" transform="translate(0, ${s2y - 114})">
+          <rect x="94" y="114" width="32" height="40" rx="2" fill="#dfe4f2"/>
+          <rect x="94" y="114" width="32" height="7" fill="#182038"/>
+          ${s.flame === 2 ? '<polygon points="98,154 122,154 110,176" fill="#5cb0ff"/>' : ''}
+          <text x="148" y="138" fill="${s.s2 === 1 ? '#ff6b6b' : '#9aa6c9'}">${s.s2 === 1 ? '✕ S-II Dropped (Orbit)' : 'S-II Stage 2'}</text>
+        </g>
+
+        <!-- S-IVB Third Stage -->
+        <g opacity="${s3op}" transform="translate(0, ${s3y - 82})">
+          <rect x="97" y="82" width="26" height="30" rx="2" fill="#e6eaf5"/>
+          <text x="148" y="100" fill="${s.s3 === 1 ? '#ff6b6b' : '#9aa6c9'}">${s.s3 === 1 ? '✕ S-IVB → Lunar Impact' : 'S-IVB Stage 3'}</text>
+        </g>
+
+        <!-- Lunar Module (Gold Descent + Gray Ascent) -->
+        <g transform="translate(${s.lm >= 1 ? 265 : 98}, ${s.lm >= 1 ? 150 : 54})">
+          ${s.lm >= 1 ? '<rect x="-35" y="56" width="130" height="22" rx="4" fill="#6d748c" opacity="0.55"/><text x="30" y="71" text-anchor="middle" fill="#ffd9a0" font-size="9">DESCENT STAGE STAYS</text>' : ''}
+          <rect x="2" y="34" width="24" height="14" rx="2" fill="#e3b341"/>
+          ${s.lm >= 1 ? '<line x1="2" y1="42" x2="-5" y2="56" stroke="#cfd5e6" stroke-width="2"/><line x1="26" y1="42" x2="33" y2="56" stroke="#cfd5e6" stroke-width="2"/>' : ''}
+          <g transform="translate(0, ${s.lm === 1 ? -34 : s.lm === 2 ? -64 : 0})" opacity="${s.lm === 2 ? 0.25 : 1}">
+            ${s.flame === 3 ? '<polygon points="9,34 19,34 14,50" fill="#ffb347"/>' : ''}
+            <rect x="4" y="16" width="20" height="18" rx="5" fill="#dfe4f2"/>
+            ${s.lm === 1 ? '<text x="34" y="28" fill="#5eead4">↑ Ascent Liftoff</text>' : ''}
+          </g>
+        </g>
+
+        <!-- Command / Service Module -->
+        <g transform="translate(${s.cm === 1 ? 280 : 100}, ${s.cm === 1 ? 52 : 20})">
+          ${s.cm === 0 ? '<rect x="2" y="14" width="16" height="18" rx="2" fill="#9aa4c2"/>' : ''}
+          <polygon points="10,0 2,14 18,14" fill="#ffffff" stroke="#ffb86b" stroke-width="1.5"/>
+          <text x="26" y="13" fill="#ffb86b">${s.cm === 1 ? '✓ Command Module Only (5,500 kg)' : 'CSM + LM'}</text>
+        </g>
+      </g>
+    `;
+  }
+
+  $('#stPills').innerHTML = STAGES.map((s, i) => `<button class="sp ${i === 0 ? 'on' : ''}" data-i="${i}">Step ${i + 1}</button>`).join('');
+  $$('#stPills .sp').forEach(b => b.onclick = () => renderStage(+b.dataset.i));
+  renderStage(0);
+
+  /* ---------- EXPERIMENT 1 & 3: GRAVITY DROP & ROCKET EQUATION ---------- */
+  const G = { Earth: [9.81, '#5cb0ff'], Moon: [1.62, '#cfd6ec'], Mars: [3.71, '#ff8a65'] };
+  const c1 = $('#c1'), x1 = c1.getContext('2d');
+  let t0 = null;
+  const hs = $('#h');
+
+  function d1(t) {
+    const h = +hs.value;
+    const T = t0 == null ? null : (t - t0) / 1000;
+    const W = c1.width, Hh = c1.height, gr = Hh - 34;
+    x1.clearRect(0, 0, W, Hh);
+    x1.font = '700 14px Manrope, sans-serif';
+
+    Object.entries(G).forEach(([n, [gv, col]], i) => {
+      const X = W * (i + 0.5) / 3;
+      const tf = Math.sqrt(2 * h / gv);
+      const sc = (gr - 36) / 20;
+      const k = T == null ? 0 : Math.min(T, tf);
+      const y = 0.5 * gv * k * k;
+      const ballY = gr - (h - y) * sc - 9;
+
+      x1.strokeStyle = C.line;
+      x1.beginPath();
+      x1.moveTo(X - 54, gr);
+      x1.lineTo(X + 54, gr);
+      x1.stroke();
+
+      x1.fillStyle = C.hi;
+      x1.fillRect(X - 1.5, gr - h * sc, 3, h * sc);
+
+      if (T != null && T >= tf && T < tf + 0.6) {
+        const p = (T - tf) / 0.6;
+        x1.strokeStyle = col;
+        x1.globalAlpha = 1 - p;
+        x1.beginPath();
+        x1.ellipse(X, gr, 10 + p * 34, 3 + p * 6, 0, 0, 7);
+        x1.stroke();
+        x1.globalAlpha = 1;
+      }
+
+      x1.beginPath();
+      x1.arc(X, ballY, 9, 0, 7);
+      x1.fillStyle = col;
+      x1.shadowColor = col;
+      x1.shadowBlur = 14;
+      x1.fill();
+      x1.shadowBlur = 0;
+
+      x1.fillStyle = C.ink;
+      x1.textAlign = 'center';
+      x1.fillText(n, X, 22);
+      x1.fillStyle = C.mut;
+      x1.fillText(T != null && T >= tf ? `${tf.toFixed(2)} s` : `${gv} m/s²`, X, Hh - 10);
+    });
+    requestAnimationFrame(d1);
+  }
+  requestAnimationFrame(d1);
+  hs.oninput = () => { $('#ho').textContent = hs.value + ' m'; t0 = null; };
+  $('#drop').onclick = () => { t0 = performance.now(); };
+  $('#tt').textContent = 'Moon gravity (1.62 m/s²) takes ~2.46× longer than Earth.';
+
+  const c2 = $('#c2'), x2 = c2.getContext('2d'), ms = $('#m');
+  function d2() {
+    const dryAscent = 2150;
+    const keep = +ms.value;
+    const ve = 311 * 9.81;
+    const dv = 1850;
+    const factor = Math.exp(dv / ve) - 1;
+    const fuel = (dryAscent + keep) * factor;
+    const baseFuel = dryAscent * factor;
+    const extraFuel = fuel - baseFuel;
+
+    $('#mo').textContent = keep + ' kg';
+    $('#rt').textContent = `Ascent propellant needed: ${Math.round(fuel)} kg (+${Math.round(extraFuel)} kg extra propellant just for ${keep} kg kept aboard, or ${(extraFuel / Math.max(keep, 1)).toFixed(2)} kg fuel per kg).`;
+
+    const W = c2.width, Hh = c2.height;
+    x2.clearRect(0, 0, W, Hh);
+    const mx = (dryAscent + 500) * factor;
+
+    [
+      ['Ascent Cabin (Dry)', dryAscent, '#5cb0ff'],
+      ['Extra Mass Kept', keep, '#ffb86b'],
+      ['Required Propellant', fuel, '#ff6b6b']
+    ].forEach((b, i) => {
+      const w = (W - 80) * (b[1] / (mx + 400));
+      const y = 30 + i * 68;
+      x2.fillStyle = C.hi;
+      x2.fillRect(40, y, W - 80, 38);
+      x2.fillStyle = b[2];
+      x2.fillRect(40, y, Math.max(4, w), 38);
+      x2.fillStyle = C.ink;
+      x2.font = '700 13px Manrope, sans-serif';
+      x2.fillText(`${b[0]} · ${Math.round(b[1])} kg`, 52, y + 24);
+    });
+    requestAnimationFrame(d2);
+  }
+  requestAnimationFrame(d2);
+
+  /* ---------- CHRONOLOGICAL TIMELINE ---------- */
+  const SB = { active: 'Still active', silent: 'Silent', crashed: 'Crashed', left: 'Left on surface' };
+  const TL = { f: 'all' };
+  const ALL = MISSIONS.slice().sort((a, b) => a.date < b.date ? -1 : a.date > b.date ? 1 : 0);
+
+  const lz = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    lz.unobserve(e.target);
+    paint(MISSIONS.find(x => x.id === e.target.dataset.id), $('img', e.target), false);
+  }), { rootMargin: '500px' });
+
+  function tl() {
+    let h = '', ei = -1;
+    ALL.filter(m => TL.f === 'all' || m.w === TL.f).forEach(m => {
+      while (ERAS[ei + 1] && m.date >= ERAS[ei + 1].from) {
+        ei++;
+        h += `<div class="era glass rv"><h3>${esc(ERAS[ei].t)}</h3><p>${esc(ERAS[ei].d)}</p></div>`;
+      }
+      h += `
+        <div class="ti rv" style="--c:${COL[m.kind]}">
+          <button class="tc glass" data-id="${m.id}">
+            <div class="ph"><img loading="lazy" alt=""></div>
+            <div class="t">
+              <time>${esc(m.dt)} · ${m.w === 'moon' ? 'MOON' : 'MARS'}</time>
+              <b>${esc(m.name)}</b>
+              <p>${esc(m.stat || m.story)} <span class="bdg">${SB[m.status] || ''}</span></p>
+            </div>
+          </button>
+        </div>
+      `;
+    });
+    $('#tl').innerHTML = h;
+    $$('.tc').forEach(c => {
+      lz.observe(c);
+      c.onclick = () => {
+        const m = MISSIONS.find(x => x.id === c.dataset.id);
+        $$('.seg').find(s => s.dataset.w === m.w).click();
+        $('#atlas').scrollIntoView();
+        setTimeout(() => pick(m), 420);
+      };
+    });
+    rv();
+  }
+
+  $('#tlf').innerHTML = [['all', 'All Worlds'], ['moon', 'Moon Only'], ['mars', 'Mars Only']].map(f => `<button class="chip ${f[0] === 'all' ? 'on' : ''}" data-f="${f[0]}">${f[1]}</button>`).join('');
+  $$('#tlf .chip').forEach(b => b.onclick = () => {
+    TL.f = b.dataset.f;
+    $$('#tlf .chip').forEach(x => x.classList.toggle('on', x === b));
+    tl();
+  });
+  tl();
+
+  /* ---------- ROVER DISTANCE RACE / FLIP CARDS / QUIZ / GLOSSARY ---------- */
+  const mxR = Math.max(...RACE.map(r => r.km));
+  $('#rc').innerHTML = RACE.map(r => `
+    <div class="r rv">
+      <b>${esc(r.n)}<small>${esc(r.note)}</small></b>
+      <div class="trk"><div class="fill ${r.w}" data-w="${Math.max(r.km / mxR * 100, 5)}">${r.km.toFixed(r.km < 1 ? 2 : 1)} km</div></div>
+    </div>
+  `).join('');
+
+  $$('#rc .r').forEach(r => {
+    const o = new IntersectionObserver(es => es.forEach(e => {
+      if (e.isIntersecting) {
+        setTimeout(() => {
+          const f = $('.fill', r);
+          f.style.width = f.dataset.w + '%';
+        }, 160);
+        o.disconnect();
+      }
+    }), { threshold: 0.35 });
+    o.observe(r);
+  });
+
+  $('#fn').innerHTML = FUN.map(f => `
+    <button class="fl glass rv" aria-pressed="false">
+      <div>
+        <span class="glass">
+          <small>${esc(f.w)} · ${esc(f.b)}</small>
+          <b>${esc(f.t)}</b>
+          <small style="color:var(--acc)">Tap to flip →</small>
+        </span>
+        <span class="bk glass">${esc(f.d)}</span>
+      </div>
+    </button>
+  `).join('');
+  $$('.fl').forEach(b => b.onclick = () => {
+    const on = b.classList.toggle('on');
+    b.setAttribute('aria-pressed', on);
+  });
+
+  $('#gl').innerHTML = GLOSSARY.map(g => `<div class="glass rv"><dt>${esc(g[0])}</dt><dd>${esc(g[1])}</dd></div>`).join('');
+
+  let qi = 0, sc = 0;
+  function quiz() {
+    const bx = $('#qb');
+    if (qi >= QUIZ.length) {
+      const p = Math.round(sc / QUIZ.length * 100);
+      bx.innerHTML = `
+        <div class="eyebrow">Quiz Complete</div>
+        <h3>You scored ${sc} of ${QUIZ.length} (${p}%)</h3>
+        <p style="color:var(--mut)">${p >= 80 ? 'Flight Director mastery! You know the physics and history of lunar and Martian exploration.' : p >= 50 ? 'Solid mission specialist score. Spin the 3D globe and try again.' : 'Explore the mission cards on the globe and give it another run.'}</p>
+        <button class="btn" id="qr">Restart Quiz</button>
+      `;
+      $('#qr').onclick = () => { qi = 0; sc = 0; quiz(); };
+      return;
+    }
+    const q = QUIZ[qi];
+    bx.innerHTML = `
+      <div class="eyebrow">Student Knowledge Check</div>
+      <div class="prog"><i style="width:${qi / QUIZ.length * 100}%"></i></div>
+      <small style="color:var(--mut);font-weight:700">QUESTION ${qi + 1} OF ${QUIZ.length}</small>
+      <h3 style="margin-top:6px">${esc(q.q)}</h3>
+      ${q.o.map((o, i) => `<button class="opt" data-i="${i}">${esc(o)}</button>`).join('')}
+      <div id="fb" aria-live="polite"></div>
+    `;
+    $$('.opt', bx).forEach(b => b.onclick = () => {
+      const i = +b.dataset.i, ok = i === q.a;
+      if (ok) sc++;
+      $$('.opt', bx).forEach(x => {
+        x.disabled = true;
+        if (+x.dataset.i === q.a) x.classList.add('ok');
+      });
+      if (!ok) b.classList.add('no');
+      $('#fb').innerHTML = `
+        <p style="margin:14px 0"><b>${ok ? 'Correct!' : 'Not quite.'}</b> ${esc(q.e)}</p>
+        <button class="btn" id="qn">${qi === QUIZ.length - 1 ? 'See Final Score' : 'Next Question →'}</button>
+      `;
+      $('#qn').onclick = () => { qi++; quiz(); };
+    });
+  }
+  quiz();
+
+  /* ---------- REALISTIC MULTI-STAGE SATURN V / APOLLO DETACHMENT PROLOGUE ---------- */
+  (() => {
+    const sec = $('#intro'), cv = $('#film'), g = cv.getContext('2d'), ti = $('#ititle'), fp = $('#fp'), cp = $('#cap');
+    const tPhase = $('#tPhase'), tDetail = $('#tDetail');
+    let W, H, dp, p = 0, ST = [], busy = 0;
+    const cl = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+    const sg = (v, a, b) => cl((v - a) / (b - a));
+    const es = x => x * x * (3 - 2 * x);
+    const lr = (a, b, t) => a + (b - a) * t;
+
+    const CAPS = [
+      [-0.05, 0.09, 'Saturn V Liftoff', '2,900,000 kg of rocket & propellant ignite at Pad 39A'],
+      [0.10, 0.22, 'Stage 1 (S-IC) Separation', 'Five F-1 engines burn out; the 42-metre first stage falls away'],
+      [0.23, 0.36, 'Trans-Lunar Injection (S-IVB)', 'Stage 3 accelerates Apollo to 39,000 km/h toward the Moon'],
+      [0.37, 0.48, 'CSM–LM Extraction & S-IVB Jettison', 'Command Module extracts the Lunar Module; spent S-IVB heads for lunar impact'],
+      [0.50, 0.61, 'Lunar Touchdown', 'The gold-foil Descent Stage brakes onto Tranquility Base'],
+      [0.62, 0.73, 'Pyrotechnic Stage Separation', 'Explosive bolts fire—the Ascent Stage blasts off while the Descent Stage stays behind'],
+      [0.75, 0.85, 'Lunar Rendezvous & Return', 'CSM brings the crew home; LM Ascent Stage is jettisoned in lunar orbit'],
+      [0.86, 0.94, 'Still Preserved Today', 'Descent stages, rovers, and flags remain untouched on the Moon']
+    ];
+    cp.innerHTML = CAPS.map(c => `<div><b>${c[2]}</b><span>${c[3]}</span></div>`).join('');
+    const ce = [...cp.children];
+
+    const E = [0, -1.3], M = [8.4, -5.8], Ap = [8.1, -5.6], P1 = [0.4, -5.5], P1r = [7.4, -1.2], Eh = [0.25, -1.3], mid = [3.85, -2.55];
+    const bz = (a, b, c, t) => [(1 - t) * (1 - t) * a[0] + 2 * (1 - t) * t * b[0] + t * t * c[0], (1 - t) * (1 - t) * a[1] + 2 * (1 - t) * t * b[1] + t * t * c[1]];
+    const bd = (a, b, c, t) => [2 * (1 - t) * (b[0] - a[0]) + 2 * t * (c[0] - b[0]), 2 * (1 - t) * (b[1] - a[1]) + 2 * t * (c[1] - b[1])];
+
+    function fit() {
+      dp = Math.min(devicePixelRatio || 1, 2);
+      W = cv.clientWidth;
+      H = cv.clientHeight;
+      cv.width = W * dp;
+      cv.height = H * dp;
+      let s = 11;
+      const r = () => (s = (s * 16807) % 2147483647) / 2147483647;
+      ST = Array.from({ length: Math.min(320, (W * H / 3800) | 0) }, () => [r(), r(), r() * 1.4 + 0.3, r() * 6]);
+      draw();
+    }
+
+    function saturnAssembly(x, y, ang, L, prog) {
+      g.save();
+      g.translate(x, y);
+      g.rotate(ang + Math.PI / 2);
+
+      const s1Sep = es(sg(prog, 0.10, 0.21));
+      const s2Sep = es(sg(prog, 0.22, 0.31));
+      const s3Sep = es(sg(prog, 0.37, 0.47));
+      const rotCSM = es(sg(prog, 0.36, 0.42));
+      const retMode = prog >= 0.73;
+
+      const w1 = L * 0.13;
+      const w2 = L * 0.125;
+      const w3 = L * 0.095;
+
+      const drawPlume = (py, pw, plen, col1, col2) => {
+        const flick = 0.85 + 0.25 * Math.sin(prog * 1100);
+        g.fillStyle = col1;
+        g.beginPath();
+        g.moveTo(-pw * 0.5, py);
+        g.lineTo(pw * 0.5, py);
+        g.lineTo(0, py + plen * flick);
+        g.fill();
+        g.fillStyle = col2;
+        g.beginPath();
+        g.moveTo(-pw * 0.25, py);
+        g.lineTo(pw * 0.25, py);
+        g.lineTo(0, py + plen * 0.55 * flick);
+        g.fill();
+      };
+
+      if (!retMode && s1Sep < 0.98) {
+        g.save();
+        g.globalAlpha = 1 - s1Sep;
+        g.translate(s1Sep * L * 0.18, s1Sep * L * 0.65);
+        g.rotate(s1Sep * 0.45);
+        const h1 = L * 0.38, y1 = L * 0.12;
+        if (s1Sep < 0.15) drawPlume(y1 + h1, w1 * 1.15, L * 0.42, '#ff9a3c', '#fff6cc');
+        g.fillStyle = '#edf1fa';
+        g.fillRect(-w1 / 2, y1, w1, h1);
+        g.fillStyle = '#181e30';
+        g.fillRect(-w1 / 2, y1 + h1 * 0.72, w1, h1 * 0.28);
+        g.fillRect(-w1 / 2, y1, w1, h1 * 0.08);
+        [-1, 1].forEach(s => {
+          g.fillStyle = '#cfd5e6';
+          g.beginPath();
+          g.moveTo(s * w1 / 2, y1 + h1 * 0.76);
+          g.lineTo(s * w1 * 1.1, y1 + h1);
+          g.lineTo(s * w1 / 2, y1 + h1);
+          g.fill();
+        });
+        g.restore();
+      }
+
+      if (!retMode && s2Sep < 0.98) {
+        g.save();
+        g.globalAlpha = 1 - s2Sep;
+        g.translate(-s2Sep * L * 0.16, s2Sep * L * 0.52);
+        g.rotate(-s2Sep * 0.35);
+        const h2 = L * 0.26, y2 = -L * 0.14;
+        if (s1Sep > 0.2 && s2Sep < 0.15) drawPlume(y2 + h2, w2 * 0.9, L * 0.32, '#6ec1ff', '#ffffff');
+        g.fillStyle = '#e4e9f5';
+        g.fillRect(-w2 / 2, y2, w2, h2);
+        g.fillStyle = '#181e30';
+        g.fillRect(-w2 / 2, y2, w2, h2 * 0.14);
+        g.restore();
+      }
+
+      if (!retMode && s3Sep < 0.98) {
+        g.save();
+        g.globalAlpha = 1 - s3Sep;
+        g.translate(s3Sep * L * 0.22, s3Sep * L * 0.45);
+        g.rotate(s3Sep * 0.55);
+        const h3 = L * 0.20, y3 = -L * 0.34;
+        if (s2Sep > 0.2 && s3Sep < 0.15 && prog < 0.46) drawPlume(y3 + h3, w3 * 0.85, L * 0.28, '#6ec1ff', '#ffffff');
+        g.fillStyle = '#edf1fa';
+        g.fillRect(-w3 / 2, y3, w3, h3);
+        g.fillStyle = '#181e30';
+        g.fillRect(-w3 / 2, y3 + h3 * 0.65, w3, h3 * 0.16);
+        g.fillStyle = '#dce2f0';
+        g.beginPath();
+        g.moveTo(-w3 / 2, y3);
+        g.lineTo(w3 / 2, y3);
+        g.lineTo(w3 * 0.36, y3 - L * 0.08);
+        g.lineTo(-w3 * 0.36, y3 - L * 0.08);
+        g.fill();
+        g.restore();
+      }
+
+      g.save();
+      const yTop = retMode ? 0 : -L * 0.44;
+      g.translate(0, yTop);
+
+      if (!retMode && rotCSM > 0.4) {
+        const ext = (rotCSM - 0.4) / 0.6;
+        g.save();
+        g.translate(0, -L * 0.14 * ext);
+        g.fillStyle = '#e3b341';
+        g.fillRect(-w3 * 0.34, -L * 0.05, w3 * 0.68, L * 0.05);
+        g.fillStyle = '#cfd5e6';
+        g.fillRect(-w3 * 0.26, 0, w3 * 0.52, L * 0.045);
+        g.restore();
+      }
+
+      g.rotate(Math.PI * rotCSM * (retMode ? 0 : 1));
+      g.fillStyle = '#aeb7cf';
+      g.fillRect(-w3 * 0.34, -L * 0.02, w3 * 0.68, L * 0.08);
+      if (retMode && prog < 0.81) drawPlume(L * 0.06, w3 * 0.5, L * 0.18, '#ffb347', '#ffffff');
+      g.fillStyle = '#f4f7ff';
+      g.beginPath();
+      g.moveTo(-w3 * 0.34, -L * 0.02);
+      g.lineTo(w3 * 0.34, -L * 0.02);
+      g.lineTo(0, -L * 0.09);
+      g.fill();
+      g.restore();
+
+      g.restore();
+    }
+
+    function seg(a, b) { return sg(p, a, b); }
+
+    function space() {
+      let k, c, rp, a;
+      const kf = Math.min(W * 0.85 / 9.8, H * 0.85 / 7.2);
+      if (p < 0.6) {
+        if (p < 0.1) {
+          const q = p / 0.1;
+          rp = [0, -1 - 0.3 * q * q];
+          a = -Math.PI / 2;
+        } else {
+          const t = seg(0.1, 0.47);
+          rp = bz(E, P1, Ap, t);
+          const d = bd(E, P1, Ap, t);
+          a = Math.atan2(d[1], d[0]);
+        }
+        if (p < 0.12) {
+          k = lr(0.82 * H, 0.42 * H, es(p / 0.12));
+          c = [rp[0], rp[1] - 0.12 * H / k];
+        } else if (p < 0.4) {
+          const u = es(seg(0.12, 0.4));
+          k = lr(0.42 * H, kf, u);
+          const f = [rp[0], rp[1] - 0.3];
+          c = [lr(f[0], mid[0], u), lr(f[1], mid[1], u)];
+        } else {
+          const u = es(seg(0.4, 0.52));
+          k = kf * Math.pow(2.2 * H / kf, u);
+          c = [lr(mid[0], M[0], u), lr(mid[1], M[1], u)];
+        }
+      } else {
+        const t = seg(0.74, 0.84);
+        rp = bz(Ap, P1r, Eh, t);
+        const d = bd(Ap, P1r, Eh, t);
+        a = Math.atan2(d[1], d[0]);
+        k = kf;
+        c = mid;
+      }
+
+      const S = (x, y) => [W / 2 + (x - c[0]) * k, H / 2 + (y - c[1]) * k];
+      const e0 = S(0, 0), m0 = S(M[0], M[1]);
+      const al = 1 - seg(0, 0.14);
+      if (al > 0) {
+        const hy = S(0, -1)[1];
+        const gr = g.createLinearGradient(0, 0, 0, hy + k * 0.05);
+        gr.addColorStop(0, 'rgba(3,5,12,0)');
+        gr.addColorStop(1, `rgba(46,110,215,${al})`);
+        g.fillStyle = gr;
+        g.fillRect(0, 0, W, H);
+      }
+
+      const eg = g.createRadialGradient(e0[0] - k * 0.35, e0[1] - k * 0.35, k * 0.1, e0[0], e0[1], k);
+      eg.addColorStop(0, '#5fb0ff');
+      eg.addColorStop(0.6, '#1d5fc4');
+      eg.addColorStop(1, '#08224f');
+      g.save();
+      g.beginPath();
+      g.arc(e0[0], e0[1], k, 0, 7);
+      g.fillStyle = eg;
+      g.fill();
+      g.clip();
+      g.fillStyle = 'rgba(70,160,90,0.75)';
+      [[-0.3, -0.45, 0.34, 0.17, 0.4], [0.35, -0.2, 0.25, 0.3, -0.6], [-0.05, 0.35, 0.4, 0.14, 0.1]].forEach(q => {
+        g.beginPath();
+        g.ellipse(e0[0] + q[0] * k, e0[1] + q[1] * k, q[2] * k, q[3] * k, q[4], 0, 7);
+        g.fill();
+      });
+      g.restore();
+
+      g.strokeStyle = 'rgba(120,190,255,0.35)';
+      g.lineWidth = Math.max(2, k * 0.03);
+      g.beginPath();
+      g.arc(e0[0], e0[1], k * 1.01, 0, 7);
+      g.stroke();
+
+      const mr = 0.3 * k;
+      const mg = g.createRadialGradient(m0[0] - mr * 0.4, m0[1] - mr * 0.4, mr * 0.1, m0[0], m0[1], mr);
+      mg.addColorStop(0, '#e6e8ee');
+      mg.addColorStop(1, '#6a7082');
+      g.fillStyle = mg;
+      g.beginPath();
+      g.arc(m0[0], m0[1], mr, 0, 7);
+      g.fill();
+      g.fillStyle = 'rgba(0,0,0,0.14)';
+      [[-0.3, -0.2, 0.18], [0.25, 0.15, 0.25], [-0.1, 0.4, 0.12], [0.4, -0.35, 0.1]].forEach(q => {
+        g.beginPath();
+        g.arc(m0[0] + q[0] * mr, m0[1] + q[1] * mr, q[2] * mr, 0, 7);
+        g.fill();
+      });
+
+      g.fillStyle = 'rgba(255,255,255,0.55)';
+      if (p >= 0.1) {
+        const n = p < 0.6 ? seg(0.1, 0.47) : 1;
+        for (let i = 0; i <= n * 42; i++) {
+          const q = bz(E, P1, Ap, i / 42), s = S(q[0], q[1]);
+          g.beginPath();
+          g.arc(s[0], s[1], 1.6, 0, 7);
+          g.fill();
+        }
+      }
+      if (p >= 0.6) {
+        g.fillStyle = 'rgba(255,200,120,0.75)';
+        const n = seg(0.74, 0.84);
+        for (let i = 0; i <= n * 42; i++) {
+          const q = bz(Ap, P1r, Eh, i / 42), s = S(q[0], q[1]);
+          g.beginPath();
+          g.arc(s[0], s[1], 1.6, 0, 7);
+          g.fill();
+        }
+        const mk = S(Ap[0], Ap[1]), pu = (performance.now() / 900) % 1;
+        g.strokeStyle = `rgba(255,184,107,${1 - pu})`;
+        g.lineWidth = 2;
+        g.beginPath();
+        g.arc(mk[0], mk[1], 5 + pu * 16, 0, 7);
+        g.stroke();
+      }
+      if ((p < 0.6 && p < 0.48) || (p >= 0.73 && p < 0.85)) {
+        const s = S(rp[0], rp[1]);
+        saturnAssembly(s[0], s[1], a, Math.min(Math.max(0.24 * k, 34), 0.22 * H), p);
+      }
+      if (p < 0.1 && p > 0) {
+        g.fillStyle = 'rgba(230,235,245,0.35)';
+        const s = S(0, -1);
+        for (let i = 0; i < 11; i++) {
+          g.beginPath();
+          g.arc(s[0] + (i % 2 ? 1 : -1) * i * H * 0.013, s[1] - i * H * 0.004, H * (0.012 + i * 0.004), 0, 7);
+          g.fill();
+        }
+      }
+    }
+
+    function surf() {
+      const gy = H * 0.74, u = Math.min(W * 0.2, H * 0.12), cx = W * 0.42, fx = cx + u * 0.9, fy = gy - u * 0.7;
+      const z = es(seg(0.86, 0.97)), s = 1 + z * 2.3;
+      const dy = lr(-H * 0.9, 0, es(seg(0.5, 0.6)));
+      const ay = -es(seg(0.65, 0.74)) * H * 1.35;
+      const flg = es(seg(0.6, 0.64));
+      const boltFlash = p >= 0.64 && p <= 0.67 ? Math.sin(((p - 0.64) / 0.03) * Math.PI) : 0;
+
+      const sk = g.createLinearGradient(0, 0, 0, gy);
+      sk.addColorStop(0, '#02030a');
+      sk.addColorStop(1, '#0c1330');
+      g.fillStyle = sk;
+      g.fillRect(0, 0, W, H);
+
+      g.fillStyle = '#fff';
+      ST.forEach(q => {
+        g.globalAlpha = 0.4 + 0.5 * Math.abs(Math.sin(q[3]));
+        g.fillRect(q[0] * W, q[1] * gy, q[2], q[2]);
+      });
+      g.globalAlpha = 1;
+
+      const er = Math.min(W, H) * 0.05;
+      const eg = g.createRadialGradient(W * 0.2 - er * 0.3, H * 0.2 - er * 0.3, er * 0.1, W * 0.2, H * 0.2, er);
+      eg.addColorStop(0, '#7cc0ff');
+      eg.addColorStop(1, '#14439a');
+      g.fillStyle = eg;
+      g.beginPath();
+      g.arc(W * 0.2, H * 0.2, er, 0, 7);
+      g.fill();
+
+      g.save();
+      g.translate(lr(fx, W / 2, z), lr(fy, H * 0.58, z));
+      g.scale(s, s);
+      g.translate(-fx, -fy);
+
+      const gg = g.createLinearGradient(0, gy, 0, gy + H * 0.5);
+      gg.addColorStop(0, '#9096a8');
+      gg.addColorStop(1, '#323649');
+      g.fillStyle = gg;
+      g.fillRect(-W * 3, gy, W * 7, H * 3);
+
+      g.fillStyle = 'rgba(0,0,0,0.2)';
+      [[0.1, 0.05, 0.14], [0.75, 0.08, 0.2], [0.95, 0.13, 0.1], [0.3, 0.12, 0.08]].forEach(q => {
+        g.beginPath();
+        g.ellipse(W * q[0] + (q[0] > 0.5 ? u : 0), gy + H * q[1], W * q[2] * 0.5, H * q[2] * 0.12, 0, 0, 7);
+        g.fill();
+      });
+
+      for (let i = 0; i < 5 && flg > 0; i++) {
+        g.fillStyle = 'rgba(40,44,60,0.55)';
+        g.beginPath();
+        g.ellipse(cx + u * (0.5 + i * 0.16), gy + u * 0.12 + (i % 2) * u * 0.05, u * 0.07, u * 0.025, 0, 0, 7);
+        g.fill();
+      }
+
+      g.save();
+      g.translate(0, dy);
+      g.strokeStyle = '#cfd5e6';
+      g.lineWidth = Math.max(2, u * 0.05);
+      [[-0.5, -0.52, -0.82, 0], [0.5, -0.52, 0.82, 0], [0, -0.52, 0, 0]].forEach(l => {
+        g.beginPath();
+        g.moveTo(cx + u * l[0], gy - u * 0.5);
+        g.lineTo(cx + u * l[2], gy);
+        g.stroke();
+      });
+      g.fillStyle = '#cfd5e6';
+      g.fillRect(cx - u * 0.96, gy - u * 0.03, u * 0.28, u * 0.04);
+      g.fillRect(cx + u * 0.68, gy - u * 0.03, u * 0.28, u * 0.04);
+      g.fillRect(cx - u * 0.14, gy - u * 0.03, u * 0.28, u * 0.04);
+
+      if (dy < -4) {
+        g.fillStyle = '#ffb347';
+        g.beginPath();
+        g.moveTo(cx - u * 0.18, gy - u * 0.1);
+        g.lineTo(cx + u * 0.18, gy - u * 0.1);
+        g.lineTo(cx, gy + u * 0.6 * (1 + 0.2 * Math.sin(p * 800)));
+        g.fill();
+      }
+
+      g.fillStyle = '#e3b341';
+      g.fillRect(cx - u * 0.56, gy - u * 0.55, u * 1.12, u * 0.5);
+      g.fillStyle = '#b8902b';
+      g.fillRect(cx - u * 0.56, gy - u * 0.22, u * 1.12, u * 0.04);
+      g.fillStyle = '#9aa4c2';
+      g.beginPath();
+      g.moveTo(cx - u * 0.22, gy - u * 0.55);
+      g.lineTo(cx + u * 0.22, gy - u * 0.55);
+      g.lineTo(cx + u * 0.12, gy - u * 0.62);
+      g.lineTo(cx - u * 0.12, gy - u * 0.62);
+      g.fill();
+
+      if (boltFlash > 0) {
+        g.fillStyle = `rgba(255, 240, 180, ${boltFlash})`;
+        [-0.42, 0.42].forEach(bx => {
+          g.beginPath();
+          g.arc(cx + u * bx, gy - u * 0.56, u * 0.18 * boltFlash, 0, 7);
+          g.fill();
+        });
+      }
+
+      g.save();
+      g.translate(0, ay);
+      if (ay < -3 && ay > -H * 1.25) {
+        g.fillStyle = '#ffd27a';
+        g.beginPath();
+        g.moveTo(cx - u * 0.15, gy - u * 0.55);
+        g.lineTo(cx + u * 0.15, gy - u * 0.55);
+        g.lineTo(cx, gy - u * 0.55 + u * 0.72);
+        g.fill();
+      }
+      g.fillStyle = '#e6e9f2';
+      g.beginPath();
+      if (g.roundRect) g.roundRect(cx - u * 0.42, gy - u * 1.38, u * 0.84, u * 0.83, u * 0.16);
+      else g.rect(cx - u * 0.42, gy - u * 1.38, u * 0.84, u * 0.83);
+      g.fill();
+      g.fillStyle = '#27386f';
+      g.beginPath();
+      g.moveTo(cx - u * 0.24, gy - u * 1.18);
+      g.lineTo(cx - u * 0.05, gy - u * 1.14);
+      g.lineTo(cx - u * 0.20, gy - u * 1.02);
+      g.fill();
+      g.beginPath();
+      g.moveTo(cx + u * 0.24, gy - u * 1.18);
+      g.lineTo(cx + u * 0.05, gy - u * 1.14);
+      g.lineTo(cx + u * 0.20, gy - u * 1.02);
+      g.fill();
+      g.restore();
+      g.restore();
+
+      const fh = u * 1.2 * flg, fxp = cx + u * 1.5;
+      g.strokeStyle = '#d9dde8';
+      g.lineWidth = Math.max(2, u * 0.03);
+      g.beginPath();
+      g.moveTo(fxp, gy + u * 0.05);
+      g.lineTo(fxp, gy + u * 0.05 - fh);
+      g.stroke();
+
+      if (flg > 0) {
+        const fw = u * 0.7 * flg, fh2 = u * 0.42 * flg, top = gy + u * 0.05 - fh;
+        for (let i = 0; i < 7; i++) {
+          g.fillStyle = i % 2 ? '#f4f4f4' : '#d23a3a';
+          const w = Math.sin(performance.now() / 300 + i) * u * 0.02;
+          g.fillRect(fxp, top + fh2 * i / 7, fw + w, fh2 / 7 + 0.5);
+        }
+        g.fillStyle = '#2a3f8f';
+        g.fillRect(fxp, top, fw * 0.42, fh2 * 4 / 7);
+      }
+
+      if (z > 0.3) {
+        const pu = (performance.now() / 1000) % 1;
+        g.strokeStyle = `rgba(255,184,107,${(1 - pu) * z})`;
+        g.lineWidth = 2;
+        g.beginPath();
+        g.arc(cx + u * 0.75, gy - u * 0.55, u * (1.3 + pu * 0.6), 0, 7);
+        g.stroke();
+      }
+      g.restore();
+    }
+
+    function updateTelemetry() {
+      if (p < 0.10) {
+        tPhase.textContent = 'STAGE 1 · S-IC ASCENT';
+        tDetail.textContent = 'Mass: 2,900,000 kg → Burning 15 tonnes of propellant/sec';
+      } else if (p < 0.22) {
+        tPhase.textContent = 'SEPARATION · S-IC DROPPED';
+        tDetail.textContent = '2,250,000 kg first stage detached · S-II ignites';
+      } else if (p < 0.37) {
+        tPhase.textContent = 'TRANSLUNAR INJECTION · S-IVB';
+        tDetail.textContent = 'Velocity: 39,000 km/h · Escaping Earth gravity well';
+      } else if (p < 0.50) {
+        tPhase.textContent = 'TRANSPOSITION & DOCKING';
+        tDetail.textContent = 'CSM extracts Lunar Module · Spent S-IVB steered to Moon';
+      } else if (p < 0.65) {
+        tPhase.textContent = 'TRANQUILITY BASE · TOUCHDOWN';
+        tDetail.textContent = 'LM Mass: 15,100 kg → Flag & ALSEP instruments deployed';
+      } else if (p < 0.74) {
+        tPhase.textContent = 'PYROTECHNIC SEPARATION';
+        tDetail.textContent = '2,034 kg Descent Stage stays · 4,700 kg Ascent Stage lifts off';
+      } else if (p < 0.86) {
+        tPhase.textContent = 'EARTH RETURN TRAJECTORY';
+        tDetail.textContent = 'LM Ascent Stage jettisoned · Only 5,500 kg CM returns';
+      } else {
+        tPhase.textContent = 'HERITAGE PRESERVED · 1969–2026';
+        tDetail.textContent = '99.81% of launch mass staged away · Historic sites mapped below';
+      }
+    }
+
+    function draw() {
+      g.setTransform(dp, 0, 0, dp, 0, 0);
+      g.fillStyle = '#03050c';
+      g.fillRect(0, 0, W, H);
+      g.fillStyle = '#fff';
+      ST.forEach(q => {
+        g.globalAlpha = 0.35 + 0.5 * Math.abs(Math.sin(q[3] + p * 20));
+        g.fillRect(q[0] * W, q[1] * H, q[2], q[2]);
+      });
+      g.globalAlpha = 1;
+
+      const sp = p < 0.6 ? 1 - seg(0.48, 0.54) : seg(0.73, 0.77) * (1 - seg(0.81, 0.85));
+      const sf = p < 0.6 ? seg(0.48, 0.54) : p < 0.8 ? 1 - seg(0.73, 0.77) : seg(0.81, 0.85);
+      if (sp > 0) { g.save(); g.globalAlpha = sp; space(); g.restore(); }
+      if (sf > 0) { g.save(); g.globalAlpha = sf; surf(); g.restore(); }
+
+      const t = es(seg(0.92, 0.98));
+      g.fillStyle = `rgba(3,5,14,${0.58 * t})`;
+      g.fillRect(0, 0, W, H);
+
+      ti.style.opacity = t;
+      ti.style.transform = `translateY(${(1 - t) * 24}px) scale(${0.96 + 0.04 * t})`;
+      ti.style.visibility = t < 0.04 ? 'hidden' : 'visible';
+      fp.style.width = p * 100 + '%';
+      updateTelemetry();
+
+      ce.forEach((e, i) => {
+        const c = CAPS[i];
+        const op = Math.min(sg(p, c[0], c[0] + 0.02), 1 - sg(p, c[1] - 0.02, c[1]));
+        e.style.opacity = op;
+        e.style.transform = `translateY(${(1 - op) * 10}px)`;
+      });
+    }
+
+    function onS() {
+      if (busy) return;
+      busy = 1;
+      requestAnimationFrame(() => {
+        busy = 0;
+        const r = sec.getBoundingClientRect();
+        p = cl(-r.top / (r.height - innerHeight));
+        draw();
+      });
+    }
+    addEventListener('scroll', onS, { passive: true });
+    addEventListener('resize', () => { fit(); onS(); });
+    fit();
+    onS();
+  })();
+
+  rv();
+})();
+</script>
+</body>
+</htm
